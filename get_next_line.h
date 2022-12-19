@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 21:01:42 by lsun             ###   ########.fr       */
+/*   Created: 2022/11/15 16:36:28 by lsun              #+#    #+#             */
+/*   Updated: 2022/11/24 19:22:14 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
+# endif
 
-typedef struct s_fdf
-{
-	void	*mlx_ptr;
-	void	*mlx_window;
-	void	*mlx_image;
-}			t_fdf;
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct s_line
-{
-	int		x1;
-	int		y1;
-	int		x2;
-	int		y2;
-}			t_line;
+char	*get_next_line(int fd);
+size_t	ft_strlen(const char *str);
+size_t	ft_strlen_nl(const char *str);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *src);
+void	*ft_calloc(size_t count, size_t size);
 
 #endif

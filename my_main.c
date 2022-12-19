@@ -6,15 +6,13 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 20:13:35 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/19 20:48:09 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
 #include "fdf.h"
+#include "./libft/libft.h"
 
-// make the hook work
-// include libft and printf
 
 int	deal_key(int key, t_fdf fdf)
 {
@@ -70,10 +68,6 @@ t_line line_init(int x1, int y1, int x2, int y2)
 //	exit (1);
 //}
 
-//int read_map()
-//{
-
-//}
 
 int	main(void)
 {

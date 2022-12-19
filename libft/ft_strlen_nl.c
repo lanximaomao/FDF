@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 21:01:42 by lsun             ###   ########.fr       */
+/*   Created: 2022/11/15 16:39:34 by lsun              #+#    #+#             */
+/*   Updated: 2022/12/19 20:38:29 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "libft.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-
-typedef struct s_fdf
+size_t	ft_strlen_nl(const char *str)
 {
-	void	*mlx_ptr;
-	void	*mlx_window;
-	void	*mlx_image;
-}			t_fdf;
+	size_t	len;
 
-typedef struct s_line
-{
-	int		x1;
-	int		y1;
-	int		x2;
-	int		y2;
-}			t_line;
-
-#endif
+	len = 0;
+	while (str[len] != '\0' && str[len] != '\n')
+		len++;
+	if (str[len] == '\n')
+		return (len + 1);
+	return (0);
+}

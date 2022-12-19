@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   map_handeling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 21:01:42 by lsun             ###   ########.fr       */
+/*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
+/*   Updated: 2022/12/19 21:12:04 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
 
-typedef struct s_fdf
+//char	*get_next_line(int fd);
+
+// make the hook work
+// include libft and printf
+
+int main(int argc, char**argv)
 {
-	void	*mlx_ptr;
-	void	*mlx_window;
-	void	*mlx_image;
-}			t_fdf;
+	int fd;
 
-typedef struct s_line
-{
-	int		x1;
-	int		y1;
-	int		x2;
-	int		y2;
-}			t_line;
-
-#endif
+	if (argc != 2)
+	{
+		ft_printf("incorrect map");
+		return(0);
+	}
+	fd = open(argv[1], O_RDONLY);
+	get_next_line(fd);
+	return(0);
+}
