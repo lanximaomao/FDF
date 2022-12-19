@@ -1,32 +1,25 @@
-all:
-	cc my_main.c -lmlx -framework OpenGL -framework AppKit
-
-
-
-#NAME = libftprintf.a
-#SRCS = ft_printf.c ft_hexa_deci.c ft_printf_ptr.c ft_printf_utils.c
-#OBJS = $(SRCS:.c=.o)
+NAME = fdf
+SRCS = *.c
+OBJS = $(SRCS:.c=.o)
 #INCLUDE = libft/libft.h
-#CFLAGS = -c -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
-#all: $(NAME)
+all: $(NAME)
 
-#$(NAME):
-#	make -C ./libft all
-#	make -C ./libft bonus
-#	mv ./libft/libft.a ./$(NAME)
-#	cc $(CFLAGS) $(SRCS) -I $(INCLUDE)
-#	ar -rus $(NAME) $(OBJS)
+$(NAME):
+	make -C ./libft all
+	make -C ./libft bonus
+	cc $(FLAGS) $(SRCS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -L . ./libft/libft.a
+	#cc $(FLAGS) $(SRCS) -lmlx -lXext -lX11 -o $(NAME) -L . ./libft/libft.a
 
-#clean:
-#	make -C ./libft clean
-#	rm -f $(OBJS) $(BONUS_OBJS)
+clean:
+	make -C ./libft clean
+	rm -f $(OBJS)
 
-#fclean: clean
-#	make -C ./libft fclean
-#	rm -f $(NAME)
-#	rm -f libft.a
+fclean: clean
+	make -C ./libft fclean
+	rm $(NAME);
 
-#re: fclean all
+re: fclean all
 
-#.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft
