@@ -6,13 +6,14 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 21:01:42 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/20 11:39:40 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+#include "mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>

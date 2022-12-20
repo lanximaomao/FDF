@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 20:48:09 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:31:15 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 #include "./libft/libft.h"
 
 
-int	deal_key(int key, t_fdf fdf)
+int	deal_key(int key, t_fdf *fdf)
 {
 	if (key == 53)
 	{
-		mlx_destroy_window(fdf.mlx_ptr, fdf.mlx_window);
+		mlx_destroy_window(fdf->mlx_ptr, fdf->mlx_window);
 		exit(1);
 	}
+	printf("%d ", key);
 	return (0);
 }
 
@@ -63,10 +64,11 @@ t_line line_init(int x1, int y1, int x2, int y2)
 	return (line1);
 }
 
-//void close_window(t_fdf fdf)
-//{
-//	exit (1);
-//}
+int close_window(void *param)
+{
+	param = NULL;
+	exit(1);
+}
 
 
 int	main(void)
@@ -77,16 +79,18 @@ int	main(void)
 	fdf.mlx_ptr = mlx_init();
 	fdf.mlx_window = mlx_new_window(fdf.mlx_ptr, 1000, 1000,
 			"where is my line?");
-	fdf.mlx_image = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
+	//fdf.mlx_image = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
 	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 500, 500, 0xFFFFFF);
 	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 600, 600, 0xFFFFFF);
 	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 700, 700, 0xFFFFFF);
 	line1 = line_init(500,500,700,700);
 	bresenham_line(line1, fdf, 0xFFFFFF);
-	//mlx_hook(fdf.mlx_window, 2, 0, deal_key, (void *)0);
-	//mlx_hook(fdf.mlx_window, 1, 0, close_window, (void *)0);
-	mlx_key_hook(fdf.mlx_window, deal_key, (void *)0);
+	mlx_hook(fdf.mlx_window, 2, 0, deal_key, &fdf);
+	mlx_hook(fdf.mlx_window, 17, 0, close_window, (void *)0);
+	//mlx_key_hook(fdf.mlx_window, deal_key, &fdf); // a key is pressed
+	//mlx_mouse_hook(fdf.mlx_window, close_window, &fdf);
 	// why key is not used as an input here?
 	mlx_loop(fdf.mlx_ptr);
 	return (0);
 }
+
