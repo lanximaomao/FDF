@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/20 11:39:40 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:46:07 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 typedef struct s_fdf
 {
 	void	*mlx_ptr;
-	void	*mlx_window;
-	void	*mlx_image;
+	void	*win_ptr;
+	void	*image_ptr;
 }			t_fdf;
 
 typedef struct s_line

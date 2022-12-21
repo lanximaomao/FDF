@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/20 13:31:15 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/21 15:58:39 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	deal_key(int key, t_fdf *fdf)
 {
 	if (key == 53)
 	{
-		mlx_destroy_window(fdf->mlx_ptr, fdf->mlx_window);
+		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 		exit(1);
 	}
 	printf("%d ", key);
@@ -40,7 +40,7 @@ int	bresenham_line(t_line line1, t_fdf fdf, int color_code)
 	p = 2 * dy - dx;
 	while (x <= line1.x2)
 	{
-		mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, x, y, color_code);
+		mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
 		x++;
 		if (p < 0)
 			p = p + 2 * dy;
@@ -64,9 +64,10 @@ t_line line_init(int x1, int y1, int x2, int y2)
 	return (line1);
 }
 
-int close_window(void *param)
+int close_window(void *fdf)
 {
-	param = NULL;
+	fdf = NULL;
+	printf("test");
 	exit(1);
 }
 
@@ -77,18 +78,18 @@ int	main(void)
 	t_line	line1;
 
 	fdf.mlx_ptr = mlx_init();
-	fdf.mlx_window = mlx_new_window(fdf.mlx_ptr, 1000, 1000,
+	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1000, 1000,
 			"where is my line?");
-	//fdf.mlx_image = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 500, 500, 0xFFFFFF);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 600, 600, 0xFFFFFF);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.mlx_window, 700, 700, 0xFFFFFF);
+	//fdf.image_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
+	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 500, 500, 0xFFFFFF);
+	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 600, 600, 0xFFFFFF);
+	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 700, 700, 0xFFFFFF);
 	line1 = line_init(500,500,700,700);
 	bresenham_line(line1, fdf, 0xFFFFFF);
-	mlx_hook(fdf.mlx_window, 2, 0, deal_key, &fdf);
-	mlx_hook(fdf.mlx_window, 17, 0, close_window, (void *)0);
-	//mlx_key_hook(fdf.mlx_window, deal_key, &fdf); // a key is pressed
-	//mlx_mouse_hook(fdf.mlx_window, close_window, &fdf);
+	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf);
+	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //17 key release
+	//mlx_key_hook(fdf.win_ptr, deal_key, &fdf); // a key is pressed
+	//mlx_mouse_hook(fdf.win_ptr, close_window, &fdf);
 	// why key is not used as an input here?
 	mlx_loop(fdf.mlx_ptr);
 	return (0);
