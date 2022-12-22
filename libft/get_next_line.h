@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:36:28 by lsun              #+#    #+#             */
-/*   Updated: 2022/11/24 19:22:14 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/22 15:41:19 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 size_t	ft_strlen(const char *str);
-size_t	ft_strlen_nl(const char *str);
+size_t	ft_strlen_param(const char *str, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *src);
 void	*ft_calloc(size_t count, size_t size);

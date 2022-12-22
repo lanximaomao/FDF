@@ -6,7 +6,7 @@
 #    By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 15:48:08 by linlinsun         #+#    #+#              #
-#    Updated: 2022/12/19 20:39:16 by lsun             ###   ########.fr        #
+#    Updated: 2022/12/22 14:30:51 by lsun             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ ft_atoi.c ft_memcpy.c ft_striteri.c ft_substr.c ft_bzero.c ft_memmove.c ft_strjo
 ft_calloc.c ft_memset.c ft_strlcat.c ft_toupper.c ft_isalnum.c ft_putchar_fd.c ft_strlcpy.c\
 ft_isalpha.c ft_putendl_fd.c ft_strlen.c ft_isascii.c ft_putnbr_fd.c ft_strmapi.c\
 ft_isdigit.c ft_putstr_fd.c ft_strncmp.c ft_isprint.c ft_split.c ft_strnstr.c\
-get_next_line.c ft_strlen_nl.c ft_printf.c ft_hexa_deci.c ft_printf_ptr.c ft_printf_utils.c\
+get_next_line.c ft_strlen_param.c ft_printf.c ft_hexa_deci.c ft_printf_ptr.c ft_printf_utils.c\
 
 BONUS_SRCS = ft_lstadd_back_bonus.c ft_lstadd_front_bonus.c ft_lstdelone_bonus.c\
 ft_lstiter_bonus.c ft_lstlast_bonus.c ft_lstnew_bonus.c ft_lstsize_bonus.c ft_lstclear_bonus.c\

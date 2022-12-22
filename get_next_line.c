@@ -6,13 +6,13 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:35:41 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/19 19:53:13 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/22 15:40:13 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_strjoin_gnl(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	char	*joint_str;
 	size_t	i;
@@ -38,7 +38,7 @@ static char	*ft_strjoin_gnl(char *s1, char *s2)
 	return (joint_str);
 }
 
-static char	*ft_trim(char *stash)
+char	*ft_trim(char *stash)
 {
 	char	*ret;
 	char	*temp;
@@ -57,7 +57,7 @@ static char	*ft_trim(char *stash)
 	return (ret);
 }
 
-static char	*ft_out(char *stash)
+char	*ft_out(char *stash)
 {
 	int		i;
 	int		j;
@@ -84,7 +84,7 @@ static char	*ft_out(char *stash)
 	return (NULL);
 }
 
-static char	*ft_read(int fd, char *stash)
+char	*ft_read(int fd, char *stash)
 {
 	char	*buf;
 	int		read_bytes;

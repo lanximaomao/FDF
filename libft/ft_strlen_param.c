@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strlen_param.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 16:36:28 by lsun              #+#    #+#             */
-/*   Updated: 2022/11/24 19:22:14 by lsun             ###   ########.fr       */
+/*   Created: 2022/11/15 16:39:34 by lsun              #+#    #+#             */
+/*   Updated: 2022/12/22 14:41:30 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
-# endif
+size_t	ft_strlen_param(const char *str, char c)
+{
+	size_t	len;
 
-# include <stdlib.h>
-# include <unistd.h>
-
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *str);
-size_t	ft_strlen_nl(const char *str);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *src);
-void	*ft_calloc(size_t count, size_t size);
-
-#endif
+	len = 0;
+	while (str[len] != '\0' && str[len] != c)
+	{
+		len++;
+	}
+	if (str[len] == c)
+		return (len + 1);
+	return (0);
+}

@@ -6,12 +6,12 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/21 15:58:39 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/22 11:33:29 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "./libft/libft.h"
+#include "libft/libft.h"
 
 
 int	deal_key(int key, t_fdf *fdf)
@@ -25,7 +25,7 @@ int	deal_key(int key, t_fdf *fdf)
 	return (0);
 }
 
-int	bresenham_line(t_line line1, t_fdf fdf, int color_code)
+int	bresenham_line(t_line line1, t_fdf fdf, int color_code) // how to optimize it?
 {
 	int	x;
 	int	y;
@@ -67,7 +67,6 @@ t_line line_init(int x1, int y1, int x2, int y2)
 int close_window(void *fdf)
 {
 	fdf = NULL;
-	printf("test");
 	exit(1);
 }
 
@@ -86,8 +85,8 @@ int	main(void)
 	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 700, 700, 0xFFFFFF);
 	line1 = line_init(500,500,700,700);
 	bresenham_line(line1, fdf, 0xFFFFFF);
-	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf);
-	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //17 key release
+	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf); //key press
+	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //mouse click
 	//mlx_key_hook(fdf.win_ptr, deal_key, &fdf); // a key is pressed
 	//mlx_mouse_hook(fdf.win_ptr, close_window, &fdf);
 	// why key is not used as an input here?
@@ -95,3 +94,8 @@ int	main(void)
 	return (0);
 }
 
+
+
+/*
+** https://stackoverflow.com/questions/14087274/difference-between-and-in-c
+*/
