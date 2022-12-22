@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/22 17:41:25 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/22 20:00:06 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_map
 	int		size_x;
 	int		size_y;
 	char	*line;
+	char** point;
 	char	**line_split;
 	char	*map_1d;
 	char	**map_2d;

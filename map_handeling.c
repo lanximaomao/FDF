@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/22 18:30:05 by lsun             ###   ########.fr       */
+/*   Updated: 2022/12/22 20:11:42 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,41 @@
 //	return(input);
 //}
 
+t_map	ft_create_2d_int(t_map input)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	k = 0;
+	input.map_2d = ft_split(input.map_1d, '\n');
+	//ft_printf("%s\n", input.map_2d[0]);
+	//ft_printf("%s\n", input.map_2d[1]);
+	ft_printf("x is %d, y is %d\n", input.size_x, input.size_y);
+	input.map_int = (int**)ft_calloc(sizeof(int*), input.size_y);
+	if (!input.map_int)
+		exit(1); // will this free?
+	while (i < input.size_y)
+	{
+		ft_printf("here\n");
+		input.map_int[i] = (int *) ft_calloc(sizeof(int), input.size_x);
+		if (!input.map_int[i])
+			exit(1); // will this free?
+		input.point = ft_split(input.map_2d[i], ' ');
+		j = 0;
+		while (k < input.size_x * input.size_y)
+		{
+			input.map_int[i][j] = ft_atoi(input.map_2d[k]);
+			j++;
+			k++;
+		}
+		i++;
+	}
+
+
+	return(input);
+}
 int	ft_how_many(char *str, char c)
 {
 	int	num;
@@ -96,7 +131,7 @@ t_map	ft_read_map(char **argv, t_map input)
 		input.map_1d = ft_strjoin_gnl(input.map_1d, input.line);
 	}
 	input.size_y = ft_how_many(input.map_1d, '\n');
-	//input = ft_create_2d_int(input);
+	input = ft_create_2d_int(input);
 	return (input);
 }
 
