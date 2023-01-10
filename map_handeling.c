@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/22 20:11:42 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/10 15:22:17 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,6 @@
 #include "libft/ft_printf.h"
 #include "libft/get_next_line.h"
 #include "libft/libft.h"
-
-//t_map	ft_create_2d_int(t_map input)
-//{
-//	int i;
-//	int j;
-//	int k;
-
-//	i = 0;
-//	k = 0;
-//	input.map_int = (int**)ft_calloc(sizeof(int*), input.size_y);
-//	if (!input.map_int)
-//		exit(1); // will this free?
-//	//ft_printf("here1\n");
-//	input.map_2d = ft_split(input.map_1d, ' ');
-//	//ft_printf("here2\n");
-//	//ft_printf("%s\n", input.map_2d[0]);
-//	ft_printf("%d\n", input.size_x * input.size_y);
-//	while (k < (input.size_x + 1) * input.size_y)
-//	{
-
-//		input.map_int[i] = (int *) ft_calloc(sizeof(int), input.size_x);
-//		if(input.map_2d[k][0] == '\n')
-//		{
-//			i++;
-//			k++;
-//		}
-//		j = 0;
-
-//		while (j < input.size_x)
-//		{
-//			input.map_int[i][j] = ft_atoi(input.map_2d[k]);
-//			j++;
-//			k++;
-//			ft_printf("k is %d\n", k);
-//		}
-//	}
-//	ft_printf("here4\n");
-//	return(input);
-//}
 
 t_map	ft_create_2d_int(t_map input)
 {
@@ -71,22 +32,24 @@ t_map	ft_create_2d_int(t_map input)
 		exit(1); // will this free?
 	while (i < input.size_y)
 	{
-		ft_printf("here\n");
+		//ft_printf("here\n");
 		input.map_int[i] = (int *) ft_calloc(sizeof(int), input.size_x);
 		if (!input.map_int[i])
 			exit(1); // will this free?
 		input.point = ft_split(input.map_2d[i], ' ');
+		//ft_printf("%s\n", input.point[0]);
+		//ft_printf("%s\n", input.point[1]);
+		//ft_printf("%s\n", input.point[2]);
+		//ft_printf("%s\n", input.point[3]);
 		j = 0;
-		while (k < input.size_x * input.size_y)
+		while (j < input.size_x && k < input.size_x * input.size_y)
 		{
-			input.map_int[i][j] = ft_atoi(input.map_2d[k]);
+			input.map_int[i][j] = ft_atoi(input.point[j]);
 			j++;
 			k++;
 		}
 		i++;
 	}
-
-
 	return(input);
 }
 int	ft_how_many(char *str, char c)
@@ -132,7 +95,29 @@ t_map	ft_read_map(char **argv, t_map input)
 	}
 	input.size_y = ft_how_many(input.map_1d, '\n');
 	input = ft_create_2d_int(input);
+	//ft_printf(" 22 map %d\n", input.map_int[2][2]);
 	return (input);
+}
+
+void ft_print_2D_int(t_map input)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+
+	while (i < input.size_y)
+	{
+		j = 0;
+		while (j < input.size_x)
+		{
+			ft_printf("%d", input.map_int[i][j]);
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
@@ -149,6 +134,7 @@ int	main(int argc, char **argv)
 	ft_printf("my map's y dimension is\n %d\n", input.size_y);
 	//ft_printf("\n\nmy map string is \n%s\n", input.map_1d);
 	//ft_printf("\n\nmy map int is \n%d\n", (input.map_int)[3][12]);
+	ft_print_2D_int(input);
 	return (0);
 }
 
