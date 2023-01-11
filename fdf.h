@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/11 12:07:03 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/11 13:47:39 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_fdf
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*image_ptr;
+	void	*img_ptr;
 	struct s_map *input;
 }			t_fdf;
 
