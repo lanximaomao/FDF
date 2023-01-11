@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_main.c                                          :+:      :+:    :+:   */
+/*   window_handeling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/22 11:33:29 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/11 13:15:16 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "libft/ft_printf.h"
+#include "libft/get_next_line.h"
 #include "libft/libft.h"
 
 
@@ -70,26 +72,55 @@ int close_window(void *fdf)
 	exit(1);
 }
 
+int zoom(t_map input)
+{
+	if (input.size_x > input.size_y)
+		return (1000/input.size_x);
+	else
+		return(1000/input.size_y);
+}
 
-int	main(void)
+int draw(t_map input, t_fdf fdf, int color_code)
+{
+	int i;
+	int j;
+	int scale;
+
+	i = 0;
+	scale = zoom(input);
+	while (i < input.size_y)
+	{
+		j = 0;
+		while (j < input.size_x)
+		{
+			if (input.map_int[i][j] != 0)
+				mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, j*scale, i*scale, color_code);
+			j++;
+		}
+		i++;
+	}
+	return(0);
+}
+
+int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
-	t_line	line1;
+	t_map	*input;
 
+	input = ft_calloc(1, sizeof(t_map));
+	if (!input)
+		return(0);
+	*input = map_handling(argc, argv, *input);
+	//
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1000, 1000,
 			"where is my line?");
-	//fdf.image_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 500, 500, 0xFFFFFF);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 600, 600, 0xFFFFFF);
-	//mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, 700, 700, 0xFFFFFF);
-	line1 = line_init(500,500,700,700);
-	bresenham_line(line1, fdf, 0xFFFFFF);
+	fdf.image_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000);//how to use this?
+	//line1 = line_init(500,500,700,700);
+	//bresenham_line(line1, fdf, 0xFFFFFF);
+	draw(*input, fdf, 0xFFFFFF);
 	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf); //key press
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //mouse click
-	//mlx_key_hook(fdf.win_ptr, deal_key, &fdf); // a key is pressed
-	//mlx_mouse_hook(fdf.win_ptr, close_window, &fdf);
-	// why key is not used as an input here?
 	mlx_loop(fdf.mlx_ptr);
 	return (0);
 }

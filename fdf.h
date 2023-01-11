@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2022/12/22 20:00:06 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/11 12:07:03 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_fdf
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*image_ptr;
+	struct s_map *input;
 }			t_fdf;
 
 typedef struct s_line
@@ -45,5 +46,12 @@ typedef struct s_map
 	char	**map_2d;
 	int		**map_int;
 }			t_map;
+
+t_map	ft_create_2d_int(t_map input);
+int	ft_how_many(char *str, char c);
+t_map	ft_map_init(char **argv, t_map input);
+t_map	ft_read_map(char **argv, t_map input);
+void ft_print_2D_int(t_map input);
+t_map	map_handling(int argc, char **argv, t_map input);
 
 #endif

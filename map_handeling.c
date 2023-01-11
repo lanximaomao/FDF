@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/10 15:22:17 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/11 11:56:40 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ t_map	ft_create_2d_int(t_map input)
 	i = 0;
 	k = 0;
 	input.map_2d = ft_split(input.map_1d, '\n');
-	//ft_printf("%s\n", input.map_2d[0]);
-	//ft_printf("%s\n", input.map_2d[1]);
 	ft_printf("x is %d, y is %d\n", input.size_x, input.size_y);
 	input.map_int = (int**)ft_calloc(sizeof(int*), input.size_y);
 	if (!input.map_int)
@@ -37,10 +35,6 @@ t_map	ft_create_2d_int(t_map input)
 		if (!input.map_int[i])
 			exit(1); // will this free?
 		input.point = ft_split(input.map_2d[i], ' ');
-		//ft_printf("%s\n", input.point[0]);
-		//ft_printf("%s\n", input.point[1]);
-		//ft_printf("%s\n", input.point[2]);
-		//ft_printf("%s\n", input.point[3]);
 		j = 0;
 		while (j < input.size_x && k < input.size_x * input.size_y)
 		{
@@ -120,14 +114,12 @@ void ft_print_2D_int(t_map input)
 	}
 }
 
-int	main(int argc, char **argv)
+t_map	map_handling(int argc, char **argv, t_map input)
 {
-	t_map	input;
-
 	if (argc != 2)
 	{
 		ft_printf("incorrect map\n");
-		return (0);
+		exit(1);
 	}
 	input = ft_read_map(argv, input);
 	ft_printf("my map's x dimension is \n %d\n", input.size_x);
@@ -135,7 +127,7 @@ int	main(int argc, char **argv)
 	//ft_printf("\n\nmy map string is \n%s\n", input.map_1d);
 	//ft_printf("\n\nmy map int is \n%d\n", (input.map_int)[3][12]);
 	ft_print_2D_int(input);
-	return (0);
+	return (input);
 }
 
 // how to complie:  gcc map_handeling.c  libft/libft.a
