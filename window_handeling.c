@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/11 15:43:27 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/13 11:34:29 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ int	bresenham_line(t_line line1, t_fdf fdf, int color_code) // how to optimize i
 	y = line1.y1;
 	dx = line1.x2 - line1.x1;
 	dy = line1.y2 - line1.y1;
-	p = 2 * dy - dx;
+
 
 	if (dx > dy)
 	{
+		p = 2 * dy - dx;
 		while (x <= line1.x2)
 		{
 			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
@@ -58,15 +59,16 @@ int	bresenham_line(t_line line1, t_fdf fdf, int color_code) // how to optimize i
 	}
 	else
 	{
+		p = 2 * dx - dy;
 		while (y <= line1.y2)
 		{
 			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
 			y++;
 			if (p < 0)
-				p = p + 2 * dy;
+				p = p + 2 * dx;
 			else
 			{
-				p = p + 2 * dy - 2*dx;
+				p = p + 2 * dx - 2*dy;
 				x++;
 			}
 		}
@@ -109,23 +111,35 @@ int draw(t_map input, t_fdf fdf, int color_code_1, int color_code_2)
 
 	i = 0;
 	scale = zoom(input);
-	while (i < input.size_y - 1)
+	ft_printf("my map size is %d && %d", input.size_x, input.size_y);
+	while (i <= input.size_y)
 	{
+		//ft_printf("i is %d", i);
+		//ft_printf("\n");
 		j = 0;
-		while (j < input.size_x - 1)
+		while (j <= input.size_x)
 		{
-			line1 = line_init(j*scale, i*scale, (j)*scale, (i+1)*scale);
-			line2 = line_init(j*scale, i*scale, (j+1)*scale, (i)*scale);
-			if (input.map_int[i][j] != 0)
-			{
-				bresenham_line(line1, fdf, color_code_2);
-				bresenham_line(line2, fdf, color_code_2);
-			}
-			else
-			{
-				bresenham_line(line1, fdf, color_code_1);
-				bresenham_line(line2, fdf, color_code_1);
-			}
+			//ft_printf("j is %d", j);
+			//ft_printf("\n");
+			if (i !=input.size_y)
+				line1 = line_init(j*scale, i*scale, (j)*scale, (i+1)*scale);
+			if (j != input.size_x)
+				line2 = line_init(j*scale, i*scale, (j+1)*scale, (i)*scale);
+			color_code_2 = 0;
+			//if (input.map_int[i][j] != 0)
+			//{
+			//	if (i !=input.size_y)
+			//		bresenham_line(line1, fdf, color_code_2);
+			//	if (j != input.size_x)
+			//		bresenham_line(line2, fdf, color_code_2);
+			//}
+			//else
+			//{
+				if (i !=input.size_y)
+					bresenham_line(line1, fdf, color_code_1);
+				if (j != input.size_x)
+					bresenham_line(line2, fdf, color_code_1);
+			//}
 			j++;
 		}
 		i++;
