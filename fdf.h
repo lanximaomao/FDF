@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/11 13:47:39 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/13 13:40:31 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ typedef struct s_line
 {
 	int		x1;
 	int		y1;
+	int 	z1;
 	int		x2;
 	int		y2;
+	int		z2;
 }			t_line;
 
 typedef struct s_map
