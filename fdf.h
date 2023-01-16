@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/13 13:40:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/16 10:01:00 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+#ifndef WIN_SIZE_X
+# define WIN_SIZE_X 1000
+#endif
+
+#ifndef WIN_SIZE_Y
+# define WIN_SIZE_Y 1000
+#endif
 
 typedef struct s_fdf
 {
@@ -47,7 +55,22 @@ typedef struct s_map
 	char	*map_1d;
 	char	**map_2d;
 	int		**map_int;
+	int		offset_x;
+	int		offset_y;
+	int		zoom_z;
+	int		zoom;
 }			t_map;
+
+typedef struct s_positions
+{
+	int	x;
+	int	y;
+	int z;
+	int	new_x;
+	int new_y;
+	int new_z;
+}			t_positions;
+
 
 t_map	ft_create_2d_int(t_map input);
 int	ft_how_many(char *str, char c);
