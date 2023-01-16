@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/16 16:13:37 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/16 17:06:50 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	deal_key(int key, t_fdf *fdf)
 	}
 	printf("%d ", key);
 	return (0);
+}
+
+int	close_window(void *fdf)
+{
+	fdf = NULL;
+	exit(1);
 }
 
 int	bresenham_line(t_positions pos1, t_positions pos2, t_fdf fdf, int color_code)
@@ -142,20 +148,21 @@ t_positions isometric(t_positions pos)
 	return(pos);
 }
 
-int	close_window(void *fdf)
+
+t_map	offset(t_map input)
 {
-	fdf = NULL;
-	exit(1);
+	input.offset_x = (WIN_SIZE_X - input.size_x * input.zoom)/2 ;
+	input.offset_y = (WIN_SIZE_Y - input.size_y*input.zoom)/2;
+	input.zoom_z = input.zoom/3; // arbitary values
+	return(input);
 }
 
 t_map	zoom(t_map input)
 {
 	if (input.size_x > input.size_y)
-		input.zoom = WIN_SIZE_X / input.size_x / 2;
+		input.zoom = WIN_SIZE_X / input.size_x;
 	else
-		input.zoom = WIN_SIZE_X / input.size_y / 2;
-	input.offset_x = (WIN_SIZE_X - input.size_x * input.zoom)/2 ;
-	input.offset_y = (WIN_SIZE_Y - input.size_y*input.zoom)/2;
+		input.zoom = WIN_SIZE_X / input.size_y;
 	input.zoom_z = input.zoom/3; // arbitary values
 	return(input);
 }
@@ -164,7 +171,6 @@ int which_color(t_positions pos1, t_positions pos2)
 {
 	int color_code;
 
-	ft_printf("my z is %d && %d\n", pos1.new_z, pos2.new_z);
 	if (pos1.new_z == 0 && pos2.new_z == 0)
 		color_code = 0xFFFFFF; // white
 	else if (pos1.new_z > 0 && pos2.new_z > 0)
@@ -192,10 +198,10 @@ int	draw(t_map input, t_fdf fdf)
 	t_map	map;
 
 	i = 0;
-	map = zoom(input);
-	ft_printf(" here my map size is %d && %d\n", map.size_x, map.size_y);
-	ft_printf(" here my zoom %d && zoom z %d\n", map.zoom, map.zoom_z);
-	ft_printf(" here my map offset is %d && %d\n", map.offset_x, map.offset_y);
+	map = offset(zoom(input));
+	//ft_printf(" here my map size is %d && %d\n", map.size_x, map.size_y);
+	//ft_printf(" here my zoom %d && zoom z %d\n", map.zoom, map.zoom_z);
+	//ft_printf(" here my map offset is %d && %d\n", map.offset_x, map.offset_y);
 	while (i < map.size_y)
 	{
 		j = 0;
@@ -213,8 +219,8 @@ int	draw(t_map input, t_fdf fdf)
 				 //decide which color
 				color_code = which_color(pos1, pos2);
 				 //add the isometric conversion here
-				//pos1 = isometric(pos1);
-				//pos2 = isometric(pos2);
+				pos1 = isometric(pos1);
+				pos2 = isometric(pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != map.size_x - 1)
@@ -229,8 +235,8 @@ int	draw(t_map input, t_fdf fdf)
 				// decide which color
 				color_code = which_color(pos1, pos2);
 				// add the isometric conversion here
-				//pos1 = isometric(pos1);
-				//pos2 = isometric(pos2);
+				pos1 = isometric(pos1);
+				pos2 = isometric(pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/11 11:56:40 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/16 16:53:03 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_map	map_handling(int argc, char **argv, t_map input)
 	ft_printf("my map's y dimension is\n %d\n", input.size_y);
 	//ft_printf("\n\nmy map string is \n%s\n", input.map_1d);
 	//ft_printf("\n\nmy map int is \n%d\n", (input.map_int)[3][12]);
-	ft_print_2D_int(input);
+	//ft_print_2D_int(input);
 	return (input);
 }
 
