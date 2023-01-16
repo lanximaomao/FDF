@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/16 16:11:04 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/16 16:13:37 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ int which_color(t_positions pos1, t_positions pos2)
 	else if ((pos1.new_z ==  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z == 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else if ((pos1.new_z ==  0 && pos2.new_z > 0) || (pos1.new_z > 0 && pos2.new_z == 0))
-		color_code = 0xFFFF00; // grey
+		color_code = 0xFFFF00; // yellow
 	else if ((pos1.new_z >  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z > 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else
