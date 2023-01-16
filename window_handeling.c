@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/16 15:40:48 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/16 16:11:04 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ t_map	zoom(t_map input)
 		input.zoom = WIN_SIZE_X / input.size_x / 2;
 	else
 		input.zoom = WIN_SIZE_X / input.size_y / 2;
-	input.offset_x = (WIN_SIZE_X - input.size_x * input.zoom)/2 + 200 ;
+	input.offset_x = (WIN_SIZE_X - input.size_x * input.zoom)/2 ;
 	input.offset_y = (WIN_SIZE_Y - input.size_y*input.zoom)/2;
 	input.zoom_z = input.zoom/3; // arbitary values
 	return(input);
@@ -174,7 +174,7 @@ int which_color(t_positions pos1, t_positions pos2)
 	else if ((pos1.new_z ==  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z == 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else if ((pos1.new_z ==  0 && pos2.new_z > 0) || (pos1.new_z > 0 && pos2.new_z == 0))
-		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
+		color_code = 0xFFFF00; // grey
 	else if ((pos1.new_z >  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z > 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else
@@ -213,8 +213,8 @@ int	draw(t_map input, t_fdf fdf)
 				 //decide which color
 				color_code = which_color(pos1, pos2);
 				 //add the isometric conversion here
-				pos1 = isometric(pos1);
-				pos2 = isometric(pos2);
+				//pos1 = isometric(pos1);
+				//pos2 = isometric(pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != map.size_x - 1)
@@ -229,8 +229,8 @@ int	draw(t_map input, t_fdf fdf)
 				// decide which color
 				color_code = which_color(pos1, pos2);
 				// add the isometric conversion here
-				pos1 = isometric(pos1);
-				pos2 = isometric(pos2);
+				//pos1 = isometric(pos1);
+				//pos2 = isometric(pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			j++;
