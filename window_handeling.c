@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/17 18:20:14 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/17 18:31:22 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "libft/ft_printf.h"
 #include "libft/get_next_line.h"
 #include "libft/libft.h"
+
+/*
+** put pixel into image using function mlx_get_data_addr
+** why mars map is not showing? should I remove the zoom/offset?
+** norminette
+*/
 
 int	deal_key(int key, t_fdf *fdf)
 {
@@ -214,9 +220,9 @@ int	draw(t_map input, t_fdf fdf)
 				pos1.new_x = j * input.zoom + input.offset_x;
 				pos1.new_y = i * input.zoom + input.offset_y;
 				pos1.new_z = input.map_int[i][j]* input.zoom_z;
-				printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
+				//printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
 				pos1 = isometric(pos1);
-				printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
+				//printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
 			if (i != input.size_y - 1)
 			{
 				pos2.new_x = j * input.zoom + input.offset_x;
