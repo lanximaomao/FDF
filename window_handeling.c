@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/17 13:58:16 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/17 15:22:23 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,22 +107,30 @@ t_positions isometric(t_positions pos)
 
 t_map	offset(t_map input)
 {
-	input.offset_x = (WIN_SIZE_X - 0.87 * (input.size_x + input.size_y - 2) * input.zoom)/2;
+	input.offset_x = 0.87 * input.size_y*input.zoom + (WIN_SIZE_X - 0.87 * (input.size_x - input.size_y ) * input.zoom)/2;
 	input.offset_y = (WIN_SIZE_Y - 0.5 * (input.size_x + input.size_y) * input.zoom)/2;
 	return(input);
 }
 
 // x-axis is defined by top right (input.size_x-1, 0) and left down (0, input.size_y-1)
-// after projection it become 
+// after projection it become
 // y-axis is defined by top left (0,0) and right down (input.size_x-1, input.size_y-1)
 // (x+y)*0.5 - (0 + 0 )* 0.5
+
+//t_map	zoom(t_map input)
+//{
+//	if (input.size_x > input.size_y)
+//		input.zoom = WIN_SIZE_X / input.size_x / 3;
+//	else
+//		input.zoom = WIN_SIZE_X / input.size_y / 3;
+//	input.zoom_z = input.zoom/3; // arbitary values
+//	return(input);
+//}
 
 t_map	zoom(t_map input)
 {
 	if (input.size_x > input.size_y)
-		input.zoom = WIN_SIZE_X / input.size_x / 3;
-	else
-		input.zoom = WIN_SIZE_X / input.size_y / 3;
+		input.zoom = WIN_SIZE_X / (0.87* (input.size_x + input.size_x));
 	input.zoom_z = input.zoom/3; // arbitary values
 	return(input);
 }
