@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/17 15:22:23 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/17 18:20:14 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,53 +39,93 @@ int ft_abs(int a)
 	return(a);
 }
 
-int	bresenham_line(t_positions pos1, t_positions pos2, t_fdf fdf, int color_code)
+
+int bresenham_line (int x0, int y0, int x1, int y1, t_fdf fdf, int color_code)
 {
-	int x;
-	int y;
-	int dx;
-	int dy;
-	int p;
+  int dx =  ft_abs (x1 - x0), sx = x0 < x1 ? 1 : -1;
+  int dy = -ft_abs (y1 - y0), sy = y0 < y1 ? 1 : -1;
+  int err = dx + dy, e2; /* error value e_xy */
 
-	x = pos1.new_x;
-	y = pos1.new_y;
-	dx = ft_abs(pos2.new_x - pos1.new_x);
-	dy = ft_abs(pos2.new_y - pos1.new_y);
-
-	if (dx > dy)
-	{
-		p = 2 * dy - dx;
-		while (x <= pos2.new_x)
-		{
-			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
-			x++;
-			if (p < 0)
-				p = p + 2 * dy;
-			else
-			{
-				p = p + 2 * dy - 2 * dx;
-				y++;
-			}
-		}
-	}
-	else
-	{
-		p = 2 * dx - dy;
-		while (y <= pos2.new_y)
-		{
-			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
-			y++;
-			if (p < 0)
-				p = p + 2 * dx;
-			else
-			{
-				p = p + 2 * dx - 2 * dy;
-				x++;
-			}
-		}
-	}
-	return (0);
+  for (;;){  /* loop */
+    mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x0, y0, color_code);
+    if (x0 == x1 && y0 == y1) break;
+    e2 = 2 * err;
+    if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+    if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+  }
+  return (1);
 }
+
+//int	bresenham_line(t_positions pos1, t_positions pos2, t_fdf fdf, int color_code)
+//{
+//	int x;
+//	int y;
+//	int dx;
+//	int dy;
+//	int p;
+
+//	x = pos1.new_x;
+//	y = pos1.new_y;
+//	dx = ft_abs(pos2.new_x - pos1.new_x);
+//	dy = ft_abs(pos2.new_y - pos1.new_y);
+//	if (dx > dy)
+//	{
+//		p = 2 * dy - dx;
+//		while (x <= pos2.new_x)
+//		{
+//			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
+//			x++;
+//			if (p < 0)
+//				p = p + 2 * dy;
+//			else
+//			{
+//				p = p + 2 * dy - 2 * dx;
+//				y++;
+//			}
+//		}
+//	}
+//	else
+//	{
+//		p = 2 * dx - dy;
+//		while (y <= pos2.new_y)
+//		{
+//			mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
+//			y++;
+//			if (p < 0)
+//				p = p + 2 * dx;
+//			else
+//			{
+//				p = p + 2 * dx - 2 * dy;
+//				x++;
+//			}
+//		}
+//	}
+//	return (0);
+//}
+
+//void drawline(int x0, int y0, int x1, int y1)
+//{
+//    int dx, dy, p, x, y;
+//    dx=x1-x0;
+//    dy=y1-y0;
+//    x=x0;
+//    y=y0;
+//    p=2*dy-dx;
+//    while(x<x1)
+//    {
+//        if(p>=0)
+//        {
+//            mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, x, y, color_code);
+//            y=y+1;
+//            p=p+2*dy-2*dx;
+//        }
+//        else
+//        {
+//            putpixel(x,y,7);
+//            p=p+2*dy;}
+//            x=x+1;
+//        }
+//}
 
 t_positions isometric(t_positions pos)
 {
@@ -156,63 +196,6 @@ int which_color(t_positions pos1, t_positions pos2)
 	return(color_code);
 }
 
-//int	draw(t_map input, t_fdf fdf)
-//{
-//	int		i;
-//	int		j;
-//	int		color_code;
-//	t_positions	pos1;
-//	t_positions pos2;
-
-//	i = 0;
-//	input = offset(zoom(input));
-//	while (i < input.size_y)
-//	{
-//		j = 0;
-//		while (j < input.size_x)
-//		{
-//			if (i != input.size_y - 1)
-//			{
-//				pos1.new_x = j * input.zoom + input.offset_x;
-//				pos1.new_y = i * input.zoom + input.offset_y;
-//				pos1.new_z = input.map_int[i][j]* input.zoom_z;
-//				pos2.new_x = j * input.zoom + input.offset_x;
-//				pos2.new_y = (i + 1) * input.zoom + input.offset_y;
-//				pos2.new_z = input.map_int[i+1][j]*input.zoom_z;
-
-//				 //decide which color
-//				color_code = which_color(pos1, pos2);
-//				 //add the isometric conversion here
-//				//pos1 = isometric(pos1);
-//				//pos2 = isometric(pos2);
-//				//bresenham_line(pos1, pos2, fdf, 0xFFFFFF);//white line along y axis
-//				bresenham_line(pos1, pos2, fdf, color_code);
-//			}
-//			if (j != input.size_x - 1)
-//			{
-//				pos1.new_x = j * input.zoom + input.offset_x;
-//				pos1.new_y = i * input.zoom + input.offset_y;
-//				pos1.new_z = input.map_int[i][j]* input.zoom_z;
-//				pos2.new_x = (j + 1) * input.zoom + input.offset_x;
-//				pos2.new_y = i * input.zoom + input.offset_y;
-//				pos2.new_z = input.map_int[i][j+1]*input.zoom_z;
-
-//				// decide which color
-//				color_code = which_color(pos1, pos2);
-//				// add the isometric conversion here
-//				//pos1 = isometric(pos1);
-//				//pos2 = isometric(pos2);
-//				//bresenham_line(pos1, pos2, fdf, 0xff0000);//red line along x axis
-//				bresenham_line(pos1, pos2, fdf, color_code);
-//			}
-//			j++;
-//		}
-//		i++;
-//	}
-//	return (0);
-//}
-
-
 int	draw(t_map input, t_fdf fdf)
 {
 	int		i;
@@ -228,11 +211,14 @@ int	draw(t_map input, t_fdf fdf)
 		j = 0;
 		while (j < input.size_x)
 		{
-			if (i != input.size_y - 1)
-			{
 				pos1.new_x = j * input.zoom + input.offset_x;
 				pos1.new_y = i * input.zoom + input.offset_y;
 				pos1.new_z = input.map_int[i][j]* input.zoom_z;
+				printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
+				pos1 = isometric(pos1);
+				printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
+			if (i != input.size_y - 1)
+			{
 				pos2.new_x = j * input.zoom + input.offset_x;
 				pos2.new_y = (i + 1) * input.zoom + input.offset_y;
 				pos2.new_z = input.map_int[i+1][j]*input.zoom_z;
@@ -240,27 +226,19 @@ int	draw(t_map input, t_fdf fdf)
 				 //decide which color
 				color_code = which_color(pos1, pos2);
 				 //add the isometric conversion here
-				pos1 = isometric(pos1);
 				pos2 = isometric(pos2);
-				//bresenham_line(pos1, pos2, fdf, 0xFFFFFF);//white line along y axis
-				bresenham_line(pos1, pos2, fdf, color_code);
+				bresenham_line(pos1.new_x, pos1.new_y, pos2.new_x, pos2.new_y, fdf, color_code);//white line along y axis
+				//bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != input.size_x - 1)
 			{
-				pos1.new_x = j * input.zoom + input.offset_x;
-				pos1.new_y = i * input.zoom + input.offset_y;
-				pos1.new_z = input.map_int[i][j]* input.zoom_z;
 				pos2.new_x = (j + 1) * input.zoom + input.offset_x;
 				pos2.new_y = i * input.zoom + input.offset_y;
 				pos2.new_z = input.map_int[i][j+1]*input.zoom_z;
-
-				// decide which color
 				color_code = which_color(pos1, pos2);
-				// add the isometric conversion here
-				pos1 = isometric(pos1);
 				pos2 = isometric(pos2);
-				//bresenham_line(pos1, pos2, fdf, 0xff0000);//red line along x axis
-				bresenham_line(pos1, pos2, fdf, color_code);
+				bresenham_line(pos1.new_x, pos1.new_y, pos2.new_x, pos2.new_y, fdf, color_code);//red line along x axis
+				//bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			j++;
 		}
