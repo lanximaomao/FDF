@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window_handeling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/01/20 11:43:15 by lsun             ###   ########.fr       */
+=======
+/*   Updated: 2023/01/17 20:05:58 by linlinsun        ###   ########.fr       */
+>>>>>>> 03b26bc6d66853bfd494439bd027e5cf312c4fa4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +112,8 @@ t_positions isometric(t_positions pos)
 
 t_map	offset(t_map input)
 {
-	input.offset_x = 0.87 * input.size_y*input.zoom + (WIN_SIZE_X - 0.87 * (input.size_x - input.size_y ) * input.zoom)/2;
-	input.offset_y = (WIN_SIZE_Y - 0.5 * (input.size_x + input.size_y) * input.zoom)/2;
+	input.offset_x = 0.87 * input.size_y*input.zoom + (WIN_SIZE_X - 0.87 * (input.size_x - input.size_y ) * input.zoom)/2 - 100;
+	input.offset_y = (WIN_SIZE_Y - 0.5 * (input.size_x + input.size_y) * input.zoom)/2 - 250;
 	return(input);
 }
 
@@ -149,7 +153,7 @@ int which_color(t_positions pos1, t_positions pos2)
 	else if ((pos1.new_z ==  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z == 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else if ((pos1.new_z ==  0 && pos2.new_z > 0) || (pos1.new_z > 0 && pos2.new_z == 0))
-		color_code = 0xFFFF00; // yellow
+		color_code = 0xffcccb; // light red
 	else if ((pos1.new_z >  0 && pos2.new_z < 0) || (pos1.new_z < 0 && pos2.new_z > 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else
