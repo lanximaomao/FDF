@@ -9,8 +9,8 @@ all: $(NAME)
 $(NAME):
 	make -C ./libft all
 	make -C ./libft bonus
-#cc -I /usr/local/include -L /usr/local/lib $(FLAGS) $(SRCS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -L. ./libft/libft.a
-	cc $(FLAGS) $(SRCS) -lmlx -lXext -lX11 -o $(NAME) -L . ./libft/libft.a
+	cc -I /usr/local/include -L /usr/local/lib $(FLAGS) $(SRCS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -L. ./libft/libft.a
+#cc $(FLAGS) $(SRCS) -lmlx -lXext -lX11 -o $(NAME) -L . ./libft/libft.a
 
 clean:
 	make -C ./libft clean

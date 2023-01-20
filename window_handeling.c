@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window_handeling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/01/20 11:43:15 by lsun             ###   ########.fr       */
-=======
-/*   Updated: 2023/01/17 20:05:58 by linlinsun        ###   ########.fr       */
->>>>>>> 03b26bc6d66853bfd494439bd027e5cf312c4fa4
+/*   Updated: 2023/01/20 11:51:09 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+# include "fdf.h"
 #include "libft/ft_printf.h"
 #include "libft/get_next_line.h"
 #include "libft/libft.h"
