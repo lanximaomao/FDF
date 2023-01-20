@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/20 12:01:17 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/20 12:34:52 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 /*
 ** put pixel into image using function mlx_get_data_addr
 ** why mars map is not showing? should I remove the zoom/offset?
+** add new functionalities, translation, zoom in and out, rotation
 ** norminette
 */
 
@@ -88,6 +89,7 @@ int bresenham_line (t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
   return (1);
 }
 
+
 t_pos isometric(t_pos pos)
 {
 	int temp;
@@ -108,8 +110,10 @@ t_pos isometric(t_pos pos)
 
 t_map	offset(t_map input)
 {
-	input.offset_x = 0.87 * input.size_y*input.zoom + (WIN_SIZE_X - 0.87 * (input.size_x - input.size_y ) * input.zoom)/2 - 100;
-	input.offset_y = (WIN_SIZE_Y - 0.5 * (input.size_x + input.size_y) * input.zoom)/2 - 250;
+	input.offset_x = 0.87 * input.size_y*input.zoom + (WIN_SIZE_X - 0.87 * (input.size_x - input.size_y ) * input.zoom)/2 ;
+	input.offset_y = (WIN_SIZE_Y - 0.5 * (input.size_x + input.size_y) * input.zoom)/2 ;
+	//input.offset_x = 0;
+	//input.offset_y = 0;
 	return(input);
 }
 
@@ -130,9 +134,8 @@ t_map	offset(t_map input)
 
 t_map	zoom(t_map input)
 {
-	if (input.size_x > input.size_y)
-		input.zoom = WIN_SIZE_X / (0.87* (input.size_x + input.size_x));
-	input.zoom_z = input.zoom/3; // arbitary values
+	input.zoom = WIN_SIZE_X / (0.87* (input.size_x + input.size_y));
+	input.zoom_z = input.zoom/3;
 	return(input);
 }
 
@@ -183,6 +186,9 @@ int	draw(t_map input, t_fdf fdf)
 				pos2.new_z = input.map_int[i+1][j]*input.zoom_z;
 				color_code = which_color(pos1, pos2);
 				pos2 = isometric(pos2);
+				//ft_printf("pos1 x and y %d, %d\npos2 x and y %d, %d\n", pos1.new_x, pos1.new_y, pos2.new_x, pos2.new_y);
+				//ft_printf("i and j %d %d\n", i , j);
+				//ft_printf("zoom is %d\n", input.zoom);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != input.size_x - 1)
