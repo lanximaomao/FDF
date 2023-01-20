@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/16 10:01:00 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/20 12:00:00 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_positions
 	int	new_x;
 	int new_y;
 	int new_z;
-}			t_positions;
+}			t_pos;
 
 
 t_map	ft_create_2d_int(t_map input);

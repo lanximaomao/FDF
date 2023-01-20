@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/20 11:57:17 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/20 12:01:17 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int ft_abs(int a)
 }
 
 
-int bresenham_line (t_positions pos0, t_positions pos1, t_fdf fdf, int color_code)
+int bresenham_line (t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
 {
 	int dx;
 	int dy;
@@ -88,7 +88,7 @@ int bresenham_line (t_positions pos0, t_positions pos1, t_fdf fdf, int color_cod
   return (1);
 }
 
-t_positions isometric(t_positions pos)
+t_pos isometric(t_pos pos)
 {
 	int temp;
 
@@ -136,7 +136,7 @@ t_map	zoom(t_map input)
 	return(input);
 }
 
-int which_color(t_positions pos1, t_positions pos2)
+int which_color(t_pos pos1, t_pos pos2)
 {
 	int color_code;
 
@@ -162,8 +162,8 @@ int	draw(t_map input, t_fdf fdf)
 	int		i;
 	int		j;
 	int		color_code;
-	t_positions	pos1;
-	t_positions pos2;
+	t_pos	pos1;
+	t_pos pos2;
 
 	i = 0;
 	input = offset(zoom(input));
@@ -175,21 +175,15 @@ int	draw(t_map input, t_fdf fdf)
 				pos1.new_x = j * input.zoom + input.offset_x;
 				pos1.new_y = i * input.zoom + input.offset_y;
 				pos1.new_z = input.map_int[i][j]* input.zoom_z;
-				//printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
 				pos1 = isometric(pos1);
-				//printf("Pos1: X: %d Y: %d Z: %d\n",pos1.new_x, pos1.new_y, pos1.new_z);
 			if (i != input.size_y - 1)
 			{
 				pos2.new_x = j * input.zoom + input.offset_x;
 				pos2.new_y = (i + 1) * input.zoom + input.offset_y;
 				pos2.new_z = input.map_int[i+1][j]*input.zoom_z;
-
-				 //decide which color
 				color_code = which_color(pos1, pos2);
-				 //add the isometric conversion here
 				pos2 = isometric(pos2);
-				bresenham_line(pos1, pos2, fdf, color_code);//white line along y axis
-				//bresenham_line(pos1, pos2, fdf, color_code);
+				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != input.size_x - 1)
 			{
@@ -198,8 +192,7 @@ int	draw(t_map input, t_fdf fdf)
 				pos2.new_z = input.map_int[i][j+1]*input.zoom_z;
 				color_code = which_color(pos1, pos2);
 				pos2 = isometric(pos2);
-				bresenham_line(pos1, pos2, fdf, color_code);//red line along x axis
-				//bresenham_line(pos1, pos2, fdf, color_code);
+				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			j++;
 		}
@@ -220,10 +213,8 @@ int	main(int argc, char **argv)
 	//
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1000, 1000, "where is my line?");
-	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000); //how to use this?
+	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0, 0);
-	//line1 = line_init(500,500,700,700);
-	//bresenham_line(line1, fdf, 0xFFFFFF);
 	draw(*input, fdf);
 	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf);      //key press
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //mouse click
