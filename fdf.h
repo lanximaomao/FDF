@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 22:49:17 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/01/24 00:09:26 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ typedef struct s_pos
 	int z;
 }			t_pos;
 
+typedef struct s_line
+{
+	int dx;
+	int dy;
+	int sx;
+	int sy;
+	int err;
+	int e2;
+}	t_line;
 typedef struct s_img
 {
 	void		*img_ptr;

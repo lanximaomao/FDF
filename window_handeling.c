@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 23:47:58 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/01/24 00:17:24 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,43 +53,45 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color_code)
 		data->addr[dst] = color_code;
 }
 
+t_line line_init(t_pos pos0, t_pos pos1)
+{
+	t_line	line;
+
+	line.dx = ft_abs(pos1.x - pos0.x);
+	if (pos0.x < pos1.x)
+		line.sx = 1;
+	else
+		line.sx = -1;
+	line.dy = -ft_abs (pos1.y - pos0.y);
+	if (pos0.y < pos1.y)
+		line.sy = 1;
+	else
+		line.sy = -1;
+	line.err = line.dx + line.dy;
+	line.e2 = 2 *line.err;
+	return(line);
+}
+
 int bresenham_line (t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
 {
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int err;
-	int e2;
+	t_line line;
 
-	dx =  ft_abs (pos1.x - pos0.x);
-	if (pos0.x < pos1.x)
-		sx = 1;
-	else
-		sx = -1;
-	dy = -ft_abs (pos1.y - pos0.y);
-	if (pos0.y < pos1.y)
-		sy = 1;
-	else
-		sy = -1;
-	err = dx + dy;
-	e2 = 2 *err;
-
+	line = line_init(pos0, pos1);
   while (1)
   {
     my_mlx_pixel_put(fdf.data, pos0.x, pos0.y, color_code);
     if (pos0.x == pos1.x && pos0.y == pos1.y)
 		break;
-    e2 = 2 * err;
-    if (e2 >= dy)
+	line.e2 = 2 * line.err;
+    if (line.e2 >= line.dy)
 	{
-		 err += dy;
-		 pos0.x += sx;
+		 line.err += line.dy;
+		 pos0.x += line.sx;
 	}
-    if (e2 <= dx)
+    if (line.e2 <= line.dx)
 	{
-		err += dx;
-		pos0.y += sy;
+		line.err += line.dx;
+		pos0.y += line.sy;
 	}
   }
   return (1);
@@ -196,17 +198,14 @@ int	draw(t_map input, t_fdf fdf)
 		j = 0;
 		while (j < input.size_x)
 		{
-			//ft_printf("before  %d %d \n", j, i);
 			pos1 = pos_init(j, i, input.map_int[i][j], pos1);
 			pos1 = conversion(pos1, num, input);
-			//ft_printf("after  %d %d \n", pos1.x, pos1.y);
 			if (i != input.size_y - 1)
 			{
 				pos2 = pos_init(j, i + 1, input.map_int[i+1][j], pos2);
 				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
-				//ft_printf("--01--\n");
 			}
 			if (j != input.size_x - 1)
 			{
@@ -214,7 +213,6 @@ int	draw(t_map input, t_fdf fdf)
 				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
-				//ft_printf("--02--\n");
 			}
 			j++;
 		}
