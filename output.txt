@@ -1,6 +1,33 @@
-x is 19, y is 11
-my map's x dimension is 
- 19
-my map's y dimension is
- 11
-my image basics bpp 32 line_len 7680 endian 0
+window_handeling.c: Error!
+Error: TOO_MANY_FUNCS       (line:  75, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 100, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 110, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 131, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 139, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 147, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 161, col:   1):	Too many functions in file
+Error: WRONG_SCOPE_COMMENT  (line: 166, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 166, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 168, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 168, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 170, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 170, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 172, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 172, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 174, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 174, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 176, col:  49):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 176, col:  49):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 178, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 178, col:  32):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 180, col:  49):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 180, col:  49):	Comment is invalid in this scope
+Error: TOO_MANY_FUNCS       (line: 186, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 206, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 226, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 247, col:   1):	Too many functions in file
+Error: WRONG_SCOPE_COMMENT  (line: 259, col:   5):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 260, col:   5):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 261, col:   5):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 262, col:   5):	Comment is invalid in this scope
+Error: TOO_MANY_FUNCS       (line: 268, col:   1):	Too many functions in file
