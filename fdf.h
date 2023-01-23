@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 18:29:41 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 22:49:17 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,12 @@
 # include <stdlib.h>
 
 #ifndef WIN_SIZE_X
-# define WIN_SIZE_X 1000
+# define WIN_SIZE_X 1920
 #endif
 
 #ifndef WIN_SIZE_Y
-# define WIN_SIZE_Y 1000
+# define WIN_SIZE_Y 1080
 #endif
-
-
-
-typedef struct s_line
-{
-	int		x1;
-	int		y1;
-	int 	z1;
-	int		x2;
-	int		y2;
-	int		z2;
-}			t_line;
 
 typedef struct s_map
 {
@@ -55,7 +43,7 @@ typedef struct s_map
 	int		zoom;
 }			t_map;
 
-typedef struct s_positions
+typedef struct s_pos
 {
 	int	x;
 	int	y;
@@ -65,9 +53,9 @@ typedef struct s_positions
 typedef struct s_img
 {
 	void		*img_ptr;
-	int			*data;
-	int			sizel;
-	int			bpp;
+	int			*addr;
+	int			line_length;
+	int			bits_per_pixel;
 	int			endian;
 }				t_img;
 
@@ -76,7 +64,7 @@ typedef struct s_fdf
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_map	*input;
-	t_img	*img;
+	t_img	*data;
 }			t_fdf;
 
 t_map	ft_create_2d_int(t_map input);

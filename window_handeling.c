@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_handeling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 18:59:42 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 23:47:58 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "libft/libft.h"
 
 /*
-** put pixel into image using function mlx_get_data_addr
 ** add new functionalities, translation, zoom in and out, rotation
 ** norminette
 */
@@ -45,6 +44,14 @@ int ft_abs(int a)
 	return(a);
 }
 
+void	my_mlx_pixel_put(t_img *data, int x, int y, int color_code)
+{
+	int		dst;
+
+	dst = y * (data->line_length/4) + x;
+	if ((x >= 0 && x <= WIN_SIZE_X) && (y >= 0 && y<= WIN_SIZE_Y))
+		data->addr[dst] = color_code;
+}
 
 int bresenham_line (t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
 {
@@ -70,7 +77,7 @@ int bresenham_line (t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
 
   while (1)
   {
-    mlx_pixel_put(fdf.mlx_ptr, fdf.win_ptr, pos0.x, pos0.y, color_code);
+    my_mlx_pixel_put(fdf.data, pos0.x, pos0.y, color_code);
     if (pos0.x == pos1.x && pos0.y == pos1.y)
 		break;
     e2 = 2 * err;
@@ -96,7 +103,7 @@ t_pos isometric(t_pos pos)
 
 	pos.x = (pos.x - pos.y) * 0.87; // cos30
 	pos.y = -pos.z + (temp + pos.y) * 0.50; // sin30
-	ft_printf("after isometric %d and %d\n", pos.x, pos.y);
+	//ft_printf("after isometric %d and %d\n", pos.x, pos.y);
 	return(pos);
 }
 
@@ -118,7 +125,7 @@ int zoom( t_map input)
 		while (num * len < WIN_SIZE_X)
 			num++;
 	}
-	ft_printf("num is %d\n", num);
+	//ft_printf("num is %d\n", num);
 	return (num);
 }
 
@@ -134,7 +141,7 @@ t_pos apply_zoom(t_pos pos, int num)
 {
 	pos.x *= num;
 	pos.y *= num;
-	ft_printf("after zoom %d %d\n", pos.x, pos.y);
+	//ft_printf("after zoom %d %d\n", pos.x, pos.y);
 	return (pos);
 }
 t_pos conversion(t_pos pos, int num, t_map input)
@@ -189,7 +196,7 @@ int	draw(t_map input, t_fdf fdf)
 		j = 0;
 		while (j < input.size_x)
 		{
-			ft_printf("before  %d %d \n", j, i);
+			//ft_printf("before  %d %d \n", j, i);
 			pos1 = pos_init(j, i, input.map_int[i][j], pos1);
 			pos1 = conversion(pos1, num, input);
 			//ft_printf("after  %d %d \n", pos1.x, pos1.y);
@@ -199,6 +206,7 @@ int	draw(t_map input, t_fdf fdf)
 				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
+				//ft_printf("--01--\n");
 			}
 			if (j != input.size_x - 1)
 			{
@@ -206,6 +214,7 @@ int	draw(t_map input, t_fdf fdf)
 				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
+				//ft_printf("--02--\n");
 			}
 			j++;
 		}
@@ -214,19 +223,21 @@ int	draw(t_map input, t_fdf fdf)
 	return (0);
 }
 
-// image handeling
+int image_handeling(t_map input, t_fdf fdf)
+{
+	t_img	*image;
 
-//void mlx_put_pixel_to_img(t_img image)
-//{
-
-//}
-
-//void image_handeling(t_fdf fdf)
-//{
-//	fdf.img->img_ptr = mlx_new_image(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
-//	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img->img_ptr, 0, 0);//what is endian?
-//	fdf.img->data = (int *)mlx_get_data_addr(fdf.img->img_ptr, &fdf.img->bpp, fdf.img->sizel, fdf.img->endian);
-//}
+	image = (t_img *)ft_calloc(sizeof(t_img), 1);
+	if (!image)
+		return(0);
+	fdf.data = image;
+	fdf.data->img_ptr = mlx_new_image(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
+	fdf.data->addr = (int *)mlx_get_data_addr(fdf.data->img_ptr, &fdf.data->bits_per_pixel, &fdf.data->line_length, &fdf.data->endian);
+	ft_printf("my image basics bpp %d line_len %d endian %d\n", fdf.data->bits_per_pixel, fdf.data->line_length, fdf.data->endian);
+	draw(input, fdf);
+	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.data->img_ptr, 0, 0);
+	return(1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -237,13 +248,13 @@ int	main(int argc, char **argv)
 	if (!input)
 		return (0);
 	*input = map_handling(argc, argv, *input);
-	//
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
-	draw(*input, fdf);
+	image_handeling(*input, fdf);
 	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf);      //key press
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //mouse click
 	mlx_loop(fdf.mlx_ptr);
+	free(input);
 	return (0);
 }
 
