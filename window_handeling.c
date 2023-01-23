@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 16:48:43 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 17:46:33 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ t_pos isometric(t_pos pos)
 	return(pos);
 }
 
-t_pos	offset(t_pos pos)
-{
-	pos.x = WIN_SIZE_X / 2 - pos.x / 2;
-	pos.y = WIN_SIZE_Y / 2 - pos.y / 2;
-	ft_printf("after offset %d and %d\n", pos.x, pos.y);
-	return(pos);
-}
+//t_pos	move_to_center(t_pos pos, t_map input)
+//{
+//	pos.x += input.offset_x;
+//	pos.y += input.offset_y;
+//	ft_printf("after offset %d and %d\n", pos.x, pos.y);
+//	return(pos);
+//}
 
 int zoom( t_map input)
 {
@@ -139,19 +139,21 @@ t_pos pos_init(int x, int y, int z, t_pos pos)
 	return(pos);
 }
 
-t_pos fit_to_window(t_pos pos, int num)
+t_pos apply_zoom(t_pos pos, int num)
 {
 	pos.x *= num;
 	pos.y *= num;
 	ft_printf("after zoom %d %d\n", pos.x, pos.y);
 	return (pos);
 }
-
-t_pos conversion(t_pos pos, int num)
+t_pos conversion(t_pos pos, int num, t_map input)
 {
-	pos = fit_to_window(pos, num); // apply zoom;
-	//pos = offset(pos);
+	pos.x -= input.size_x / 2;
+	pos.y -= input.size_y / 2;
+	pos = apply_zoom(pos, num);
 	pos = isometric(pos);
+	pos.x += WIN_SIZE_X / 2;
+	pos.y += WIN_SIZE_Y / 2;
 	return(pos);
 }
 
@@ -194,19 +196,19 @@ int	draw(t_map input, t_fdf fdf)
 		{
 			ft_printf("before  %d %d \n", j, i);
 			pos1 = pos_init(j, i, input.map_int[i][j], pos1);
-			pos1 = conversion(pos1, num);
+			pos1 = conversion(pos1, num, input);
 			//ft_printf("after  %d %d \n", pos1.x, pos1.y);
 			if (i != input.size_y - 1)
 			{
 				pos2 = pos_init(j, i + 1, input.map_int[i+1][j], pos2);
-				pos2 = conversion(pos2, num);
+				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}
 			if (j != input.size_x - 1)
 			{
 				pos2 = pos_init(j + 1, i, input.map_int[i][j+1], pos2);
-				pos2 = conversion(pos2, num);
+				pos2 = conversion(pos2, num, input);
 				color_code = which_color(pos1, pos2);
 				bresenham_line(pos1, pos2, fdf, color_code);
 			}

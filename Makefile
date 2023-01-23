@@ -11,6 +11,7 @@ $(NAME):
 	make -C ./libft bonus
 	cc -I /usr/local/include -L /usr/local/lib $(FLAGS) $(SRCS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) -L. ./libft/libft.a
 #cc $(FLAGS) $(SRCS) -lmlx -lXext -lX11 -o $(NAME) -L . ./libft/libft.a
+#leaks --atExit -- ./fdf test_maps/42.fdf
 
 clean:
 	make -C ./libft clean
