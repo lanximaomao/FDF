@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 13:48:53 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 18:29:41 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,7 @@
 # define WIN_SIZE_Y 1000
 #endif
 
-typedef struct s_fdf
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	struct s_map *input;
-}			t_fdf;
+
 
 typedef struct s_line
 {
@@ -68,6 +62,22 @@ typedef struct s_positions
 	int z;
 }			t_pos;
 
+typedef struct s_img
+{
+	void		*img_ptr;
+	int			*data;
+	int			sizel;
+	int			bpp;
+	int			endian;
+}				t_img;
+
+typedef struct s_fdf
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_map	*input;
+	t_img	*img;
+}			t_fdf;
 
 t_map	ft_create_2d_int(t_map input);
 int	ft_how_many(char *str, char c);

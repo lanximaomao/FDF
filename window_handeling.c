@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 17:57:05 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 18:59:42 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 /*
 ** put pixel into image using function mlx_get_data_addr
-** zoom/offset?
 ** add new functionalities, translation, zoom in and out, rotation
 ** norminette
 */
@@ -100,14 +99,6 @@ t_pos isometric(t_pos pos)
 	ft_printf("after isometric %d and %d\n", pos.x, pos.y);
 	return(pos);
 }
-
-//t_pos	move_to_center(t_pos pos, t_map input)
-//{
-//	pos.x += input.offset_x;
-//	pos.y += input.offset_y;
-//	ft_printf("after offset %d and %d\n", pos.x, pos.y);
-//	return(pos);
-//}
 
 int zoom( t_map input)
 {
@@ -223,6 +214,20 @@ int	draw(t_map input, t_fdf fdf)
 	return (0);
 }
 
+// image handeling
+
+//void mlx_put_pixel_to_img(t_img image)
+//{
+
+//}
+
+//void image_handeling(t_fdf fdf)
+//{
+//	fdf.img->img_ptr = mlx_new_image(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
+//	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img->img_ptr, 0, 0);//what is endian?
+//	fdf.img->data = (int *)mlx_get_data_addr(fdf.img->img_ptr, &fdf.img->bpp, fdf.img->sizel, fdf.img->endian);
+//}
+
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
@@ -234,9 +239,7 @@ int	main(int argc, char **argv)
 	*input = map_handling(argc, argv, *input);
 	//
 	fdf.mlx_ptr = mlx_init();
-	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, 1000, 1000, "where is my line?");
-	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, 1000, 1000);
-	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0, 0);
+	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
 	draw(*input, fdf);
 	mlx_hook(fdf.win_ptr, 2, 0, deal_key, &fdf);      //key press
 	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf); //mouse click
