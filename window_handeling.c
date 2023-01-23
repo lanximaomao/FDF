@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/23 17:46:33 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/23 17:57:05 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,14 @@ int which_color(t_pos pos1, t_pos pos2)
 
 	if (pos1.z == 0 && pos2.z == 0)
 		color_code = 0xFFFFFF; // white
-	else if (pos1.z > 0 && pos2.z > 0)
+	else if (pos1.z > 0 && pos2.z > 0 && pos1.z == pos2.z)
 		color_code = 0xff0000; // red
-	else if (pos1.z < 0 && pos2.z < 0)
+	else if (pos1.z > 0 && pos2.z > 0 && pos1.z != pos2.z)
+		color_code = 0xffcccb; // light red?
+	else if (pos1.z < 0 && pos2.z < 0 && pos1.z == pos2.z)
 		color_code = 0x00ffff;//cyan
+	else if (pos1.z < 0 && pos2.z < 0 && pos1.z != pos2.z)
+		color_code = 0x00ffff;//cyan-- change?
 	else if ((pos1.z ==  0 && pos2.z < 0) || (pos1.z < 0 && pos2.z == 0))
 		color_code = (0x00ffff + 0xFFFFFF)/2; // grey
 	else if ((pos1.z ==  0 && pos2.z > 0) || (pos1.z > 0 && pos2.z == 0))
