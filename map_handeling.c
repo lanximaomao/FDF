@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_handeling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/20 12:35:23 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/24 00:19:43 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ t_map	ft_map_init(char **argv, t_map input)
 		ft_printf("cann't open file");
 	input.size_x = 0;
 	input.size_y = 0;
+	input.zoom = 1;
+	input.zoom_z = 1;
 	return (input);
 }
 
