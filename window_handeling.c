@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 00:21:12 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/01/24 00:23:37 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,11 @@ t_pos pos_init(int x, int y, int z, t_pos pos)
 	return(pos);
 }
 
-t_pos apply_zoom(t_pos pos, int num)
+t_pos apply_zoom(t_pos pos, int num, t_map input)
 {
 	pos.x *= num;
 	pos.y *= num;
+	pos.z *= input.zoom_z;
 	//ft_printf("after zoom %d %d\n", pos.x, pos.y);
 	return (pos);
 }
@@ -150,7 +151,7 @@ t_pos conversion(t_pos pos, int num, t_map input)
 {
 	pos.x -= input.size_x / 2;
 	pos.y -= input.size_y / 2;
-	pos = apply_zoom(pos, num);
+	pos = apply_zoom(pos, num, input);
 	pos = isometric(pos);
 	pos.x += WIN_SIZE_X / 2;
 	pos.y += WIN_SIZE_Y / 2;
