@@ -1,6 +1,0 @@
-x is 19, y is 11
-my map's x dimension is 
- 19
-my map's y dimension is
- 11
-my image basics bpp 32 line_len 7680 endian 0
