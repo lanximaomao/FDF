@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_handeling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 01:07:20 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/01/24 13:09:39 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ int	draw_line_1(int j, int i, t_fdf fdf, t_map input)
 	*pos2 = conversion(*pos2, input);
 	color_code = which_color(*pos1, *pos2);
 	bresenham_line(*pos1, *pos2, fdf, color_code);
+	free(pos1);
+	free(pos2);
 	return (1);
 }
 
@@ -220,6 +222,8 @@ int	draw_line_2(int j, int i, t_fdf fdf, t_map input)
 	*pos2 = conversion(*pos2, input);
 	color_code = which_color(*pos1, *pos2);
 	bresenham_line(*pos1, *pos2, fdf, color_code);
+	free(pos1);
+	free(pos2);
 	return (1);
 }
 
@@ -244,6 +248,20 @@ void	draw_grid(t_map input, t_fdf fdf)
 	}
 }
 
+void free_int(int** input, int height)
+{
+	int j;
+
+	j = 0;
+	while (j < height)
+	{
+		free(input[j]);
+		j++;
+	}
+	free(input);
+}
+
+
 int	image_handeling(t_map input, t_fdf fdf)
 {
 	t_img	*image;
@@ -261,6 +279,7 @@ int	image_handeling(t_map input, t_fdf fdf)
 	//			fdf.data->line_length,
 	//			fdf.data->endian);
 	draw_grid(input, fdf);
+	free_int(input.map_int, input.size_y);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.data->img_ptr, 0, 0);
 	return (1);
 }

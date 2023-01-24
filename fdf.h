@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 00:09:26 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/01/24 13:17:12 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ typedef struct s_fdf
 
 t_map	ft_create_2d_int(t_map input);
 int	ft_how_many(char *str, char c);
-t_map	ft_map_init(char **argv, t_map input);
+t_map	ft_map_init(t_map input);
 t_map	ft_read_map(char **argv, t_map input);
 void ft_print_2D_int(t_map input);
 t_map	map_handling(int argc, char **argv, t_map input);
+void free_char(char **input);
 
 #endif
