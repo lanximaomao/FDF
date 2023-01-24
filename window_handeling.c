@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 16:51:17 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/24 17:50:52 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,40 @@
 #include "libft/libft.h"
 
 /*
-** free
+** fix the hooks
 ** fix the leaks
 ** add new functionalities, translation, zoom in and out, rotation
 ** norminette
 */
 
+
 int	key_hook(int key, t_fdf *fdf)
 {
+	ft_printf("key %d ", key);
 	if (key == 53)
-	{
-		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 		exit(0);
-	}
-	ft_printf("%d ", key);
-	return (1);
+	else if (key == 69)
+		fdf->input->zoom_z++;
+	else if (key == 78)
+		fdf->input->zoom_z--;
+	return (0);
 }
 
-int	close_window(void *fdf)
+int mouse_hook(int click, int x, int y, t_fdf *fdf)
 {
+	ft_printf("mouse click %d ", click);
+	ft_printf("mouse x %d ", x);
+	ft_printf("mouse y %d ", y);
 	fdf = NULL;
 	exit(1);
+	return(0);
 }
+
+//int loop_hook(t_fdf *fdf)
+//{
+//	map_handling();
+//	return(1);
+//}
 
 int	ft_abs(int a)
 {
@@ -332,6 +344,13 @@ int	image_handeling(t_map input, t_fdf fdf)
 	return (1);
 }
 
+int register_hooks(t_fdf fdf)
+{
+	mlx_hook(fdf.win_ptr, 2, 0, key_hook, &fdf);
+	mlx_hook(fdf.win_ptr, 17, 0, mouse_hook, &fdf);
+	return(1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
@@ -348,8 +367,7 @@ int	main(int argc, char **argv)
 	if (!fdf.win_ptr)
 		exit(1);
 	image_handeling(*input, fdf);
-	mlx_hook(fdf.win_ptr, 2, 0, key_hook, &fdf);
-	mlx_hook(fdf.win_ptr, 17, 0, close_window, &fdf);
+	register_hooks(fdf);
 	mlx_loop(fdf.mlx_ptr);
 	free(input);
 	return (0);
