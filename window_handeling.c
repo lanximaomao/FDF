@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 17:50:52 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/24 18:07:33 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,22 +353,26 @@ int register_hooks(t_fdf fdf)
 
 int	main(int argc, char **argv)
 {
-	t_fdf	fdf;
+	t_fdf	*fdf;
 	t_map	*input;
 
+	fdf = ft_calloc(1, sizeof(t_fdf));
+	if (!fdf)
+		return(1);
 	input = ft_calloc(1, sizeof(t_map));
 	if (!input)
 		return (0);
 	*input = map_handling(argc, argv, *input);
-	fdf.mlx_ptr = mlx_init();
-	if (!fdf.mlx_ptr)
+	fdf->input = input;
+	fdf->mlx_ptr = mlx_init();
+	if (!fdf->mlx_ptr)
 		exit (1);
-	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
-	if (!fdf.win_ptr)
+	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
+	if (!fdf->win_ptr)
 		exit(1);
-	image_handeling(*input, fdf);
-	register_hooks(fdf);
-	mlx_loop(fdf.mlx_ptr);
+	image_handeling(*input, *fdf);
+	register_hooks(*fdf);
+	mlx_loop(fdf->mlx_ptr);
 	free(input);
 	return (0);
 }
