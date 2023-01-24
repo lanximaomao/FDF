@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 13:17:12 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/24 15:42:59 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_line
 	int err;
 	int e2;
 }	t_line;
+
 typedef struct s_img
 {
 	void		*img_ptr;
