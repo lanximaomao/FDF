@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 18:52:23 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 10:51:46 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ int	key_hook(int key, t_fdf *fdf)
 	return (0);
 }
 
-int	mouse_hook(int click, int x, int y, t_fdf *fdf)
+int	mouse_hook(int button, t_fdf *fdf)
 {
-	ft_printf("mouse click %d ", click);
-	ft_printf("mouse x %d ", x);
-	ft_printf("mouse y %d ", y);
-	fdf = NULL;
-	exit(1);
+	printf("my button is %d\n", button);
+	if (button == 5)
+		fdf->input->zoom++;
+	if (button == 4)
+		fdf->input->zoom--;
 	return (0);
 }
 
@@ -53,7 +53,7 @@ int	close_widow (t_fdf *fdf)
 
 //int loop_hook(t_fdf *fdf)
 //{
-//	map_handling();
+//	//image data
 //	return(1);
 //}
 
@@ -279,8 +279,10 @@ int	image_handeling(t_map input, t_fdf fdf)
 
 int	register_hooks(t_fdf fdf)
 {
-	mlx_hook(fdf.win_ptr, 2, 0, key_hook, &fdf);
-	mlx_hook(fdf.win_ptr, 17, 0, close_widow, &fdf);
+	mlx_hook(fdf.win_ptr, 2, 0, key_hook, &fdf); // 2 is the event code for a key press
+	mlx_hook(fdf.win_ptr, 17, 0, close_widow, &fdf); // 17 is the mouse event code means for close button
+	mlx_hook(fdf.win_ptr, 4, 0, mouse_hook, &fdf); // 4 is mouse up
+	mlx_hook(fdf.win_ptr, 5, 0, mouse_hook, &fdf); // 5 is mouse down
 	return (1);
 }
 
