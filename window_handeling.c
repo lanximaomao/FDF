@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 14:54:34 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 15:06:02 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,6 @@
 ** add new functionalities, translation, zoom in and out, rotation
 ** norminette
 */
-
-
-int	key_hook(int key, t_fdf *fdf)
-{
-	ft_printf("key %d ", key);
-	if (key == 53)
-		exit(0);
-	else if (key == 69)
-	{
-		fdf->input->zoom_z++;
-		printf("my zoom z is now %d\n", fdf->input->zoom_z);
-	}
-	else if (key == 78)
-	{
-		fdf->input->zoom_z--;
-		printf("my zoom z is now %d\n", fdf->input->zoom_z);
-	}
-	return (0);
-}
-
-int	mouse_hook(int button, t_fdf *fdf)
-{
-	printf("my button is %d\n", button);
-	if (button == 5)
-		fdf->input->zoom++;
-	if (button == 4)
-		fdf->input->zoom--;
-	return (0);
-}
-
-int	close_widow (t_fdf *fdf)
-{
-	fdf = NULL;
-	exit(1);
-	return (0);
-}
 
 int	ft_abs(int a)
 {
@@ -250,14 +214,7 @@ int	loop_hook(t_fdf *fdf)
 	return (1);
 }
 
-void	register_hooks(t_fdf *fdf)
-{
-	mlx_hook(fdf->win_ptr, 2, 0, key_hook, fdf); // 2 is the event code for a key press
-	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf); // 17 is the mouse event code means for close button
-	mlx_hook(fdf->win_ptr, 4, 0, mouse_hook, fdf); // 4 is mouse up
-	mlx_hook(fdf->win_ptr, 5, 0, mouse_hook, fdf); // 5 is mouse down
-	loop_hook(fdf);
-}
+
 
 void clean(t_fdf *fdf)
 {
@@ -274,6 +231,59 @@ void clean(t_fdf *fdf)
 	free(fdf);
 	fdf = NULL;
 	exit(1);
+}
+
+int	refresh_image(t_fdf *fdf)
+{
+	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+	draw(fdf);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
+	return (1);
+}
+
+int	key_hook(int key, t_fdf *fdf)
+{
+	ft_printf("key %d ", key);
+	if (key == 53)
+		exit(0);
+	else if (key == 69)
+	{
+		fdf->input->zoom_z++;
+		printf("my zoom z is now %d\n", fdf->input->zoom_z);
+	}
+	else if (key == 78)
+	{
+		fdf->input->zoom_z--;
+		printf("my zoom z is now %d\n", fdf->input->zoom_z);
+	}
+	refresh_image(fdf);
+	return (0);
+}
+
+int	mouse_hook(int button, t_fdf *fdf)
+{
+	printf("my button is %d\n", button);
+	if (button == 5)
+		fdf->input->zoom++;
+	if (button == 4)
+		fdf->input->zoom--;
+	return (0);
+}
+
+int	close_widow (t_fdf *fdf)
+{
+	fdf = NULL;
+	exit(1);
+	return (0);
+}
+
+void	register_hooks(t_fdf *fdf)
+{
+	mlx_hook(fdf->win_ptr, 2, 0, key_hook, fdf); // 2 is the event code for a key press
+	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf); // 17 is the mouse event code means for close button
+	mlx_hook(fdf->win_ptr, 4, 0, mouse_hook, fdf); // 4 is mouse up
+	mlx_hook(fdf->win_ptr, 5, 0, mouse_hook, fdf); // 5 is mouse down
+	loop_hook(fdf);
 }
 
 int	main(int argc, char **argv)
