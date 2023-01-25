@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 15:26:37 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 16:17:27 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,11 +231,21 @@ void clean(t_fdf *fdf)
 	exit(1);
 }
 
+//int	refresh_image(t_fdf *fdf)
+//{
+//	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+//	//
+//	draw(fdf);
+//	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
+//	return (1);
+//}
+
 int	refresh_image(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-	draw(fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
+	mlx_destroy_image(fdf->mlx_ptr, fdf->img->img_ptr);
+	image_handeling(fdf);
+	loop_hook(fdf);
 	return (1);
 }
 
