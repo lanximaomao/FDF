@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 11:38:27 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 12:35:29 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_fdf
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_map	*input;
-	t_img	*data;
+	t_img	*img;
 }			t_fdf;
 
 int	ft_create_2d_int(t_fdf *fdf);
@@ -84,5 +84,6 @@ int	ft_read_map(char **argv, t_fdf *fdf);
 int ft_print_2D_int(t_map *input);
 int	map_handling(int argc, char **argv, t_fdf *fdf);
 void free_char(char **input);
+void	zoom_init(t_fdf *fdf);
 
 #endif
