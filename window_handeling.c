@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 17:11:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 17:19:06 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ int	draw(t_fdf *fdf)
 
 int	image_handeling(t_fdf *fdf)
 {
-	fdf->img = (t_img *)ft_calloc(sizeof(t_img), 1);
+	fdf->img = (t_img *)ft_calloc(sizeof(t_img), 1);//free?
 	if (!fdf->img)
 		return (0);
 	fdf->img->img_ptr = mlx_new_image(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
@@ -224,6 +224,7 @@ void clean(t_fdf *fdf)
 		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 	free(fdf->img);
 	fdf->img = NULL;
+	free_int(fdf->input->map_int, fdf->input->size_y);
 	free(fdf->input);
 	fdf->input = NULL;
 	free(fdf);
@@ -273,8 +274,6 @@ int	main(int argc, char **argv)
 		clean(fdf);
 	register_hooks(fdf);
 	mlx_loop(fdf->mlx_ptr);
-	free(fdf);
-	free(input);
-	free_int(fdf->input->map_int, fdf->input->size_y);
+	clean(fdf);
 	return (0);
 }
