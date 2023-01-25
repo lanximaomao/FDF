@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 13:25:02 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 14:54:34 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ int	key_hook(int key, t_fdf *fdf)
 	if (key == 53)
 		exit(0);
 	else if (key == 69)
+	{
 		fdf->input->zoom_z++;
+		printf("my zoom z is now %d\n", fdf->input->zoom_z);
+	}
 	else if (key == 78)
+	{
 		fdf->input->zoom_z--;
+		printf("my zoom z is now %d\n", fdf->input->zoom_z);
+	}
 	return (0);
 }
 
@@ -122,7 +128,6 @@ t_pos	isometric(t_pos pos)
 	pos.y = -pos.z + (temp + pos.y) * 0.50;
 	return (pos);
 }
-
 
 
 t_pos	pos_init(int x, int y, int z, t_pos pos)
@@ -235,23 +240,15 @@ int	image_handeling(t_fdf *fdf)
 												&fdf->img->bits_per_pixel,
 												&fdf->img->line_length,
 												&fdf->img->endian);
-	//ft_printf("my image basics bpp %d line_len %d endian %d\n",
-	//			fdf.data->bits_per_pixel,
-	//			fdf.data->line_length,
-	//			fdf.data->endian);
-	draw(fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
 	return (1);
 }
 
 int	loop_hook(t_fdf *fdf)
 {
 	draw(fdf);
-	free_int(fdf->input->map_int, fdf->input->size_y);
 	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
 	return (1);
 }
-
 
 void	register_hooks(t_fdf *fdf)
 {
@@ -262,6 +259,23 @@ void	register_hooks(t_fdf *fdf)
 	loop_hook(fdf);
 }
 
+void clean(t_fdf *fdf)
+{
+	if(!fdf)
+		exit(1);
+	if (fdf->mlx_ptr && fdf->img->img_ptr)
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img->img_ptr);
+	if (fdf->mlx_ptr && fdf->win_ptr)
+		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
+	free(fdf->img);
+	fdf->img = NULL;
+	free(fdf->input);
+	fdf->input = NULL;
+	free(fdf);
+	fdf = NULL;
+	exit(1);
+}
+
 int	main(int argc, char **argv)
 {
 	t_fdf	*fdf;
@@ -270,24 +284,24 @@ int	main(int argc, char **argv)
 	//init
 	fdf = ft_calloc(1, sizeof(t_fdf));//remember to free
 	if (!fdf)
-		exit (1);
+		clean(fdf);
 	input = ft_calloc(1, sizeof(t_map));
 	if (!input)
-		exit (1);
+		clean(fdf);
 	fdf->input = input;
 
 	//map, working on
 	if (map_handling(argc, argv, fdf) == 0)
-		return(1);
+		clean(fdf);
 	// set up window
 	fdf->mlx_ptr = mlx_init();
 	if (!fdf->mlx_ptr)
-		exit(1);
+		clean(fdf);
 	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
 	if (!fdf->win_ptr)
-		exit(1);
+		clean(fdf);
 	if (image_handeling(fdf)== 0)
-		exit(1);
+		clean(fdf);
 	//hook
 	register_hooks(fdf);
 	mlx_loop(fdf->mlx_ptr);
