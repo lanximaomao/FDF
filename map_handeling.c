@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/24 13:59:39 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 11:48:50 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/get_next_line.h"
 #include "libft/libft.h"
 
-t_map	ft_create_2d_int(t_map input)
+int	ft_create_2d_int(t_fdf *fdf)
 {
 	int	i;
 	int	j;
@@ -23,28 +23,28 @@ t_map	ft_create_2d_int(t_map input)
 
 	i = -1;
 	k = -1;
-	input.map_2d = ft_split(input.map_1d, '\n');
-	free(input.map_1d);
-	input.map_int = (int **)ft_calloc(sizeof(int *), input.size_y);
-	if (!input.map_int)
-		exit(1);
-	while (++i < input.size_y)
+	fdf->input->map_2d = ft_split(fdf->input->map_1d, '\n');
+	fdf->input->map_int = (int **)ft_calloc(sizeof(int *), fdf->input->size_y);
+	if (!fdf->input->map_int)
+		return(0);
+	while (++i < fdf->input->size_y)
 	{
-		input.map_int[i] = (int *)ft_calloc(sizeof(int), input.size_x);
-		if (!input.map_int[i])
-			exit(1);
-		input.point = ft_split(input.map_2d[i], ' ');
-		free(input.map_2d[i]);
+		fdf->input->map_int[i] = (int *)ft_calloc(sizeof(int), fdf->input->size_x);
+		if (!fdf->input->map_int[i])
+			return(0);
+		fdf->input->point = ft_split(fdf->input->map_2d[i], ' ');
+		free(fdf->input->map_2d[i]);
 		j = -1;
-		while (++j < input.size_x && ++k < input.size_x * input.size_y)
+		while (++j < fdf->input->size_x && ++k < fdf->input->size_x * fdf->input->size_y)
 		{
-			input.map_int[i][j] = ft_atoi(input.point[j]);
-			free(input.point[j]);
+			fdf->input->map_int[i][j] = ft_atoi(fdf->input->point[j]);
+			free(fdf->input->point[j]);
 		}
 	}
-	free(input.map_2d);
-	free(input.point);
-	return (input);
+	free(fdf->input->map_1d);
+	free(fdf->input->map_2d);
+	free(fdf->input->point);
+	return (1);
 }
 
 int	ft_how_many(char *str, char c)
@@ -61,13 +61,12 @@ int	ft_how_many(char *str, char c)
 	return (num);
 }
 
-t_map	ft_map_init(t_map input)
+void	ft_map_init(t_fdf *fdf)
 {
-	input.size_x = 0;
-	input.size_y = 0;
-	input.zoom = 1;
-	input.zoom_z = 1;
-	return (input);
+	fdf->input->size_x = 0;
+	fdf->input->size_y = 0;
+	fdf->input->zoom = 1;
+	fdf->input->zoom_z = 1;
 }
 
 void	free_char(char **input)
@@ -84,45 +83,49 @@ void	free_char(char **input)
 	}
 }
 
-t_map	ft_read_map(char **argv, t_map input)
+int	ft_read_map(char **argv, t_fdf *fdf)
 {
-	input.fd = open(argv[1], O_RDONLY);
-	if (input.fd == -1)
-		ft_printf("cann't open file");
-	input = ft_map_init(input);
-	input.line = get_next_line(input.fd);
-	input.line_split = ft_split(input.line, ' ');
-	while (input.line_split[input.size_x])
+	fdf->input->fd = open(argv[1], O_RDONLY);
+	if (fdf->input->fd == -1)
 	{
-		input.size_x++;
+		ft_printf("cann't open file");
+		return(0);
 	}
-	free_char(input.line_split);
-	input.map_1d = ft_strdup(input.line);
-	free(input.line);
+	ft_map_init(fdf);
+	fdf->input->line = get_next_line(fdf->input->fd);
+	fdf->input->line_split = ft_split(fdf->input->line, ' ');
+	while (fdf->input->line_split[fdf->input->size_x])
+	{
+		fdf->input->size_x++;
+	}
+	free_char(fdf->input->line_split);
+	fdf->input->map_1d = ft_strdup(fdf->input->line);
+	free(fdf->input->line);
 	while (1)
 	{
-		input.line = get_next_line(input.fd);
-		if (!input.line)
+		fdf->input->line = get_next_line(fdf->input->fd);
+		if (!fdf->input->line)
 			break ;
-		input.map_1d = ft_strjoin_gnl(input.map_1d, input.line);
-		free(input.line);
+		fdf->input->map_1d = ft_strjoin_gnl(fdf->input->map_1d, fdf->input->line);
+		free(fdf->input->line);
 	}
-	free(input.line);
-	input.size_y = ft_how_many(input.map_1d, '\n');
-	input = ft_create_2d_int(input);
-	close(input.fd);
-	return (input);
+	fdf->input->size_y = ft_how_many(fdf->input->map_1d, '\n');
+	if (ft_create_2d_int(fdf) == 0)
+		return(0);
+	close(fdf->input->fd);
+	return (1);
 }
 
-t_map	map_handling(int argc, char **argv, t_map input)
+int	map_handling(int argc, char **argv, t_fdf *fdf)
 {
 	if (argc != 2)
 	{
 		ft_printf("incorrect map\n");
 		exit(1);
 	}
-	input = ft_read_map(argv, input);
-	ft_printf("my map's x dimension is \n %d\n", input.size_x);
-	ft_printf("my map's y dimension is\n %d\n", input.size_y);
-	return (input);
+	if (ft_read_map(argv, fdf) == 0)
+		return(0);
+	ft_printf("my map's x dimension is %d\n", fdf->input->size_x);
+	ft_printf("my map's y dimension is %d\n", fdf->input->size_y);
+	return(1);
 }

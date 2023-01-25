@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 10:51:46 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 12:00:06 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ t_line	line_init(t_pos pos0, t_pos pos1)
 	return (line);
 }
 
-int	bresenham_line(t_pos pos0, t_pos pos1, t_fdf fdf, int color_code)
+int	bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf, int color_code)
 {
 	t_line	line;
 
 	line = line_init(pos0, pos1);
 	while (1)
 	{
-		my_mlx_pixel_put(fdf.data, pos0.x, pos0.y, color_code);
+		my_mlx_pixel_put(fdf->data, pos0.x, pos0.y, color_code);
 		if (pos0.x == pos1.x && pos0.y == pos1.y)
 			break ;
 		line.e2 = 2 * line.err;
@@ -127,7 +127,7 @@ t_pos	isometric(t_pos pos)
 	return (pos);
 }
 
-int	zoom(t_map input)
+int	zoom(t_map *input)
 {
 	int	len;
 	int	num;
@@ -138,7 +138,7 @@ int	zoom(t_map input)
 	else
 		min = WIN_SIZE_X;
 	num = 1;
-	len = 0.87 * (input.size_x + input.size_y);
+	len = 0.87 * (input->size_x + input->size_y);
 	if (num * len > min)
 	{
 		while (num * len > min)
@@ -149,7 +149,7 @@ int	zoom(t_map input)
 		while (num * len < min)
 			num++;
 	}
-	input.zoom = num;
+	input->zoom = num;
 	return (num);
 }
 
@@ -161,18 +161,18 @@ t_pos	pos_init(int x, int y, int z, t_pos pos)
 	return (pos);
 }
 
-t_pos	apply_zoom(t_pos pos, int num, t_map input)
+t_pos	apply_zoom(t_pos pos, int num, t_map *input)
 {
 	pos.x *= num;
 	pos.y *= num;
-	pos.z *= input.zoom_z;
+	pos.z *= input->zoom_z;
 	return (pos);
 }
 
-t_pos	conversion(t_pos pos, int num, t_map input)
+t_pos	conversion(t_pos pos, int num, t_map *input)
 {
-	pos.x -= input.size_x / 2;
-	pos.y -= input.size_y / 2;
+	pos.x -= input->size_x / 2;
+	pos.y -= input->size_y / 2;
 	pos = apply_zoom(pos, num, input);
 	pos = isometric(pos);
 	pos.x += WIN_SIZE_X / 2;
@@ -205,7 +205,7 @@ int	which_color(t_pos pos1, t_pos pos2)
 	return (color_code);
 }
 
-int	draw(t_map input, t_fdf fdf)
+int	draw(t_fdf *fdf)
 {
 	int		i;
 	int		j;
@@ -213,25 +213,25 @@ int	draw(t_map input, t_fdf fdf)
 	t_pos	pos2;
 	int		num;
 
-	num = zoom(input);
+	num = zoom(fdf->input);
 	i = -1;
-	while (++i < input.size_y)
+	while (++i < fdf->input->size_y)
 	{
 		j = -1;
-		while (++j < input.size_x)
+		while (++j < fdf->input->size_x)
 		{
-			pos1 = pos_init(j, i, input.map_int[i][j], pos1);
-			pos1 = conversion(pos1, num, input);
-			if (i != input.size_y - 1)
+			pos1 = pos_init(j, i, fdf->input->map_int[i][j], pos1);
+			pos1 = conversion(pos1, num, fdf->input);
+			if (i != fdf->input->size_y - 1)
 			{
-				pos2 = pos_init(j, i + 1, input.map_int[i + 1][j], pos2);
-				pos2 = conversion(pos2, num, input);
+				pos2 = pos_init(j, i + 1, fdf->input->map_int[i + 1][j], pos2);
+				pos2 = conversion(pos2, num, fdf->input);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
-			if (j != input.size_x - 1)
+			if (j != fdf->input->size_x - 1)
 			{
-				pos2 = pos_init(j + 1, i, input.map_int[i][j + 1], pos2);
-				pos2 = conversion(pos2, num, input);
+				pos2 = pos_init(j + 1, i, fdf->input->map_int[i][j + 1], pos2);
+				pos2 = conversion(pos2, num, fdf->input);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
 		}
@@ -252,37 +252,37 @@ void	free_int(int **input, int height)
 	free(input);
 }
 
-int	image_handeling(t_map input, t_fdf fdf)
+int	image_handeling(t_fdf *fdf)
 {
 	t_img	*image;
 
 	image = (t_img *)ft_calloc(sizeof(t_img), 1);
 	if (!image)
 		return (0);
-	fdf.data = image;
-	fdf.data->img_ptr = mlx_new_image(fdf.mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
-	if (!fdf.data)
-		exit(1);
-	fdf.data->addr = (int *)mlx_get_data_addr(fdf.data->img_ptr,
-												&fdf.data->bits_per_pixel,
-												&fdf.data->line_length,
-												&fdf.data->endian);
+	fdf->data = image;
+	fdf->data->img_ptr = mlx_new_image(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
+	if (!fdf->data)
+		return(1);
+	fdf->data->addr = (int *)mlx_get_data_addr(fdf->data->img_ptr,
+												&fdf->data->bits_per_pixel,
+												&fdf->data->line_length,
+												&fdf->data->endian);
 	//ft_printf("my image basics bpp %d line_len %d endian %d\n",
 	//			fdf.data->bits_per_pixel,
 	//			fdf.data->line_length,
 	//			fdf.data->endian);
-	draw(input, fdf);
-	free_int(input.map_int, input.size_y);
-	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.data->img_ptr, 0, 0);
+	draw(fdf);
+	free_int(fdf->input->map_int, fdf->input->size_y);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->data->img_ptr, 0, 0);
 	return (1);
 }
 
-int	register_hooks(t_fdf fdf)
+int	register_hooks(t_fdf *fdf)
 {
-	mlx_hook(fdf.win_ptr, 2, 0, key_hook, &fdf); // 2 is the event code for a key press
-	mlx_hook(fdf.win_ptr, 17, 0, close_widow, &fdf); // 17 is the mouse event code means for close button
-	mlx_hook(fdf.win_ptr, 4, 0, mouse_hook, &fdf); // 4 is mouse up
-	mlx_hook(fdf.win_ptr, 5, 0, mouse_hook, &fdf); // 5 is mouse down
+	mlx_hook(fdf->win_ptr, 2, 0, key_hook, fdf); // 2 is the event code for a key press
+	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf); // 17 is the mouse event code means for close button
+	mlx_hook(fdf->win_ptr, 4, 0, mouse_hook, fdf); // 4 is mouse up
+	mlx_hook(fdf->win_ptr, 5, 0, mouse_hook, fdf); // 5 is mouse down
 	return (1);
 }
 
@@ -291,23 +291,31 @@ int	main(int argc, char **argv)
 	t_fdf	*fdf;
 	t_map	*input;
 
-	fdf = ft_calloc(1, sizeof(t_fdf));
+	//init
+	fdf = ft_calloc(1, sizeof(t_fdf));//remember to free
 	if (!fdf)
-		return (1);
+		exit (1);
 	input = ft_calloc(1, sizeof(t_map));
 	if (!input)
-		return (0);
-	*input = map_handling(argc, argv, *input);
+		exit (1);
 	fdf->input = input;
+
+	//map, working on
+	if (map_handling(argc, argv, fdf) == 0)
+		return(1);
+	// set up window
 	fdf->mlx_ptr = mlx_init();
 	if (!fdf->mlx_ptr)
 		exit(1);
 	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
 	if (!fdf->win_ptr)
 		exit(1);
-	image_handeling(*input, *fdf);
-	register_hooks(*fdf);
+	//hook
+	image_handeling(fdf);
+	register_hooks(fdf);
 	mlx_loop(fdf->mlx_ptr);
+
+	// free stuff
 	free(input);
 	return (0);
 }
