@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 12:35:29 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 17:03:31 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,11 @@ int ft_print_2D_int(t_map *input);
 int	map_handling(int argc, char **argv, t_fdf *fdf);
 void free_char(char **input);
 void	zoom_init(t_fdf *fdf);
+
+int	key_hook(int key, t_fdf *fdf);
+int	mouse_hook(int button, int x, int y, t_fdf *fdf);
+int	close_widow(t_fdf *fdf);
+
+int	refresh_image(t_fdf *fdf);
 
 #endif

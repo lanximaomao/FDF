@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 16:17:27 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/25 17:11:31 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 #include "libft/libft.h"
 
 /*
-** init the zoom??
-** fix the hooks
 ** fix the leaks
-** add new functionalities, translation, zoom in and out, rotation
+** translation? rotation?
 ** norminette
+**
+** NOTE
+** 1) 17 is the mouse event code means for close button;
+** 2) https://stackoverflow.com/questions/14087274/difference-between-and-in-c
 */
 
 int	ft_abs(int a)
@@ -35,7 +37,7 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color_code)
 	int	dst;
 
 	dst = y * (data->line_length / 4) + x;
-	if ((x >= 0 && x <= WIN_SIZE_X) && (y >= 0 && y <= WIN_SIZE_Y))
+	if ((x >= 0 && x < WIN_SIZE_X) && (y >= 0 && y < WIN_SIZE_Y))
 		data->addr[dst] = color_code;
 }
 
@@ -93,7 +95,6 @@ t_pos	isometric(t_pos pos)
 	return (pos);
 }
 
-
 t_pos	pos_init(int x, int y, int z, t_pos pos)
 {
 	pos.x = x;
@@ -126,7 +127,7 @@ int	which_color(t_pos pos1, t_pos pos2)
 	int	color_code;
 
 	if (pos1.z == 0 && pos2.z == 0)
-		color_code = 0xFFFFFF; // white
+		color_code = 0xffffff; // white
 	else if (pos1.z > 0 && pos2.z > 0 && pos1.z == pos2.z)
 		color_code = 0x020f0; // purple
 	else if (pos1.z > 0 && pos2.z > 0 && pos1.z != pos2.z)
@@ -136,16 +137,15 @@ int	which_color(t_pos pos1, t_pos pos2)
 	else if (pos1.z < 0 && pos2.z < 0 && pos1.z != pos2.z)
 		color_code = 0x1616ff; //blue
 	else if ((pos1.z == 0 && pos2.z < 0) || (pos1.z < 0 && pos2.z == 0))
-		color_code = (0x00ffff + 0xFFFFFF) / 2; // grey
+		color_code = (0x00ffff + 0xffffff) / 2; // grey
 	else if ((pos1.z == 0 && pos2.z > 0) || (pos1.z > 0 && pos2.z == 0))
 		color_code = 0x013220; // light red
 	else if ((pos1.z > 0 && pos2.z < 0) || (pos1.z < 0 && pos2.z > 0))
-		color_code = (0x00ffff + 0xFFFFFF) / 2; // grey
+		color_code = (0x00ffff + 0xffffff) / 2; // grey
 	else
 		color_code = 0x0000FF;
 	return (color_code);
 }
-
 
 void	free_int(int **input, int height)
 {
@@ -231,15 +231,6 @@ void clean(t_fdf *fdf)
 	exit(1);
 }
 
-//int	refresh_image(t_fdf *fdf)
-//{
-//	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-//	//
-//	draw(fdf);
-//	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
-//	return (1);
-//}
-
 int	refresh_image(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
@@ -249,56 +240,10 @@ int	refresh_image(t_fdf *fdf)
 	return (1);
 }
 
-int	key_hook(int key, t_fdf *fdf)
-{
-	ft_printf("key %d ", key);
-	if (key == 53)
-		exit(0);
-	else if (key == 69)
-	{
-		fdf->input->zoom_z++;
-		printf("my zoom z is now %d\n", fdf->input->zoom_z);
-	}
-	else if (key == 78)
-	{
-		fdf->input->zoom_z--;
-		printf("my zoom z is now %d\n", fdf->input->zoom_z);
-	}
-	refresh_image(fdf);
-	return (0);
-}
-
-int	mouse_hook(int button, int x, int y, t_fdf *fdf)
-{
-	(void)x;
-	(void)y;
-	if (button == 5)
-	{
-		printf("here");
-		fdf->input->zoom++;
-		printf("my zoom is now %d\n", fdf->input->zoom);
-	}
-	else if (button == 4)
-	{
-		fdf->input->zoom--;
-		printf("my zoom is now %d\n", fdf->input->zoom);
-	}
-	refresh_image(fdf);
-	return (0);
-}
-
-int	close_widow (t_fdf *fdf)
-{
-	fdf = NULL;
-	exit(1);
-	return (0);
-}
 
 void	register_hooks(t_fdf *fdf)
 {
-	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf); // 17 is the mouse event code means for close button
-	//mlx_hook(fdf->win_ptr, 4, 0, mouse_hook, fdf); // 4 is mouse up
-	//mlx_hook(fdf->win_ptr, 2, 0, key_hook, fdf); // 2 is the event code for a key press
+	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf);
 	mlx_key_hook(fdf->win_ptr, key_hook, fdf);
 	mlx_mouse_hook(fdf->win_ptr, mouse_hook, fdf);
 	loop_hook(fdf);
@@ -309,19 +254,15 @@ int	main(int argc, char **argv)
 	t_fdf	*fdf;
 	t_map	*input;
 
-	//init
-	fdf = ft_calloc(1, sizeof(t_fdf));//remember to free
+	fdf = ft_calloc(1, sizeof(t_fdf));
 	if (!fdf)
 		clean(fdf);
 	input = ft_calloc(1, sizeof(t_map));
 	if (!input)
 		clean(fdf);
 	fdf->input = input;
-
-	//map, working on
 	if (map_handling(argc, argv, fdf) == 0)
 		clean(fdf);
-	// set up window
 	fdf->mlx_ptr = mlx_init();
 	if (!fdf->mlx_ptr)
 		clean(fdf);
@@ -330,17 +271,10 @@ int	main(int argc, char **argv)
 		clean(fdf);
 	if (image_handeling(fdf)== 0)
 		clean(fdf);
-	//hook
 	register_hooks(fdf);
 	mlx_loop(fdf->mlx_ptr);
-
-	// free stuff
 	free(fdf);
 	free(input);
 	free_int(fdf->input->map_int, fdf->input->size_y);
 	return (0);
 }
-
-/*
-** https://stackoverflow.com/questions/14087274/difference-between-and-in-c
-*/
