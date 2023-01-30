@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/30 12:06:34 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 12:34:23 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,21 +127,21 @@ int	which_color(t_pos pos1, t_pos pos2)
 	int	color_code;
 
 	if (pos1.z == 0 && pos2.z == 0)
-		color_code = 0xffffff; // white
+		color_code = 0xffffff;
 	else if (pos1.z > 0 && pos2.z > 0 && pos1.z == pos2.z)
-		color_code = 0x020f0; // purple
+		color_code = 0x020f0;
 	else if (pos1.z > 0 && pos2.z > 0 && pos1.z != pos2.z)
-		color_code = 0x8b0000; // dark red
+		color_code = 0x8b0000;
 	else if (pos1.z < 0 && pos2.z < 0 && pos1.z == pos2.z)
-		color_code = 0x00ffff; //cyan
+		color_code = 0x00ffff;
 	else if (pos1.z < 0 && pos2.z < 0 && pos1.z != pos2.z)
-		color_code = 0x1616ff; //blue
+		color_code = 0x1616ff;
 	else if ((pos1.z == 0 && pos2.z < 0) || (pos1.z < 0 && pos2.z == 0))
-		color_code = (0x00ffff + 0xffffff) / 2; // grey
+		color_code = (0x00ffff + 0xffffff) / 2;
 	else if ((pos1.z == 0 && pos2.z > 0) || (pos1.z > 0 && pos2.z == 0))
-		color_code = 0x013220; // light red
+		color_code = 0x013220;
 	else if ((pos1.z > 0 && pos2.z < 0) || (pos1.z < 0 && pos2.z > 0))
-		color_code = (0x00ffff + 0xffffff) / 2; // grey
+		color_code = (0x00ffff + 0xffffff) / 2;
 	else
 		color_code = 0x0000FF;
 	return (color_code);
@@ -162,28 +162,26 @@ void	free_int(int **input, int height)
 
 int	draw(t_fdf *fdf)
 {
-	int		i;
-	int		j;
 	t_pos	pos1;
 	t_pos	pos2;
 
-	i = -1;
-	while (++i < fdf->input->size_y)
+	fdf->i = -1;
+	while (++fdf->i < fdf->input->size_y)
 	{
-		j = -1;
-		while (++j < fdf->input->size_x)
+		fdf->j = -1;
+		while (++fdf->j < fdf->input->size_x)
 		{
-			pos1 = pos_init(j, i, fdf->input->map_int[i][j], pos1);
+			pos1 = pos_init(fdf->j, fdf->i, fdf->input->map_int[fdf->i][fdf->j], pos1);
 			pos1 = conversion(pos1, fdf);
-			if (i != fdf->input->size_y - 1)
+			if (fdf->i != fdf->input->size_y - 1)
 			{
-				pos2 = pos_init(j, i + 1, fdf->input->map_int[i + 1][j], pos2);
+				pos2 = pos_init(fdf->j, fdf->i + 1, fdf->input->map_int[fdf->i + 1][fdf->j], pos2);
 				pos2 = conversion(pos2, fdf);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
-			if (j != fdf->input->size_x - 1)
+			if (fdf->j != fdf->input->size_x - 1)
 			{
-				pos2 = pos_init(j + 1, i, fdf->input->map_int[i][j + 1], pos2);
+				pos2 = pos_init(fdf->j + 1, fdf->i, fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
 				pos2 = conversion(pos2, fdf);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
@@ -224,11 +222,6 @@ void clean(t_fdf *fdf)
 		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 	free(fdf->img);
 	fdf->img = NULL;
-	//input
-	//free(fdf->input->line);
-	//free(fdf->input->map_1d);
-	//free_char(fdf->input->map_2d);
-	//free_char(fdf->input->line_split);
 	free_int(fdf->input->map_int, fdf->input->size_y);
 	free(fdf->input);
 	fdf->input = NULL;
@@ -237,7 +230,7 @@ void clean(t_fdf *fdf)
 	exit(1);
 }
 
-int	refresh_image(t_fdf *fdf)//
+int	refresh_image(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 	mlx_destroy_image(fdf->mlx_ptr, fdf->img->img_ptr);
