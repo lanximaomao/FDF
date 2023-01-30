@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 17:19:06 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 10:30:14 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,11 @@ void clean(t_fdf *fdf)
 		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 	free(fdf->img);
 	fdf->img = NULL;
+	//input
+	//free(fdf->input->line);
+	//free(fdf->input->map_1d);
+	//free_char(fdf->input->map_2d);
+	//free_char(fdf->input->line_split);
 	free_int(fdf->input->map_int, fdf->input->size_y);
 	free(fdf->input);
 	fdf->input = NULL;
@@ -253,15 +258,13 @@ void	register_hooks(t_fdf *fdf)
 int	main(int argc, char **argv)
 {
 	t_fdf	*fdf;
-	t_map	*input;
 
 	fdf = ft_calloc(1, sizeof(t_fdf));
 	if (!fdf)
 		clean(fdf);
-	input = ft_calloc(1, sizeof(t_map));
-	if (!input)
+	fdf->input = ft_calloc(1, sizeof(t_map));
+	if (!fdf->input)
 		clean(fdf);
-	fdf->input = input;
 	if (map_handling(argc, argv, fdf) == 0)
 		clean(fdf);
 	fdf->mlx_ptr = mlx_init();

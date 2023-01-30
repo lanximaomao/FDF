@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 12:37:10 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 10:30:06 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,17 @@ int	ft_create_2d_int(t_fdf *fdf)
 		return(0);
 	while (++i < fdf->input->size_y)
 	{
-		fdf->input->map_int[i] = (int *)ft_calloc(sizeof(int), fdf->input->size_x);
+		fdf->input->map_int[i] = (int *)ft_calloc(sizeof(int), fdf->input->size_x);//
 		if (!fdf->input->map_int[i])
 			return(0);
 		fdf->input->point = ft_split(fdf->input->map_2d[i], ' ');
-		free(fdf->input->map_2d[i]);
 		j = -1;
 		while (++j < fdf->input->size_x && ++k < fdf->input->size_x * fdf->input->size_y)
-		{
 			fdf->input->map_int[i][j] = ft_atoi(fdf->input->point[j]);
-			free(fdf->input->point[j]);
-		}
+		free_char(fdf->input->point);//
 	}
 	free(fdf->input->map_1d);
-	free(fdf->input->map_2d);
-	free(fdf->input->point);
+	free_char(fdf->input->map_2d);
 	return (1);
 }
 
@@ -81,6 +77,7 @@ void	free_char(char **input)
 		free(input[i]);
 		i++;
 	}
+	free(input);
 }
 
 int	ft_read_map(char **argv, t_fdf *fdf)
