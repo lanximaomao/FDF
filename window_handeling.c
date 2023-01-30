@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/30 12:54:57 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 12:56:30 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,14 +203,8 @@ int	image_handeling(t_fdf *fdf)
 												&fdf->img->endian);
 	fdf->i = -1;
 	fdf->j = -1;
-	return (1);
-}
-
-int	loop_hook(t_fdf *fdf)
-{
 	draw(fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0,
-			0);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
 	return (1);
 }
 
@@ -238,7 +232,6 @@ int	refresh_image(t_fdf *fdf)
 	mlx_destroy_image(fdf->mlx_ptr, fdf->img->img_ptr);
 	free(fdf->img);
 	image_handeling(fdf);
-	loop_hook(fdf);
 	return (1);
 }
 
@@ -247,7 +240,6 @@ void	register_hooks(t_fdf *fdf)
 	mlx_hook(fdf->win_ptr, 17, 0, close_widow, fdf);
 	mlx_key_hook(fdf->win_ptr, key_hook, fdf);
 	mlx_mouse_hook(fdf->win_ptr, mouse_hook, fdf);
-	loop_hook(fdf);
 }
 
 int	main(int argc, char **argv)
