@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/30 12:34:23 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 12:54:57 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int	draw(t_fdf *fdf)
 	t_pos	pos1;
 	t_pos	pos2;
 
-	fdf->i = -1;
 	while (++fdf->i < fdf->input->size_y)
 	{
 		fdf->j = -1;
@@ -181,7 +180,7 @@ int	draw(t_fdf *fdf)
 			}
 			if (fdf->j != fdf->input->size_x - 1)
 			{
-				pos2 = pos_init(fdf->j + 1, fdf->i, fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
+				pos2 = pos_init(fdf->j + 1, fdf->i,fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
 				pos2 = conversion(pos2, fdf);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
@@ -192,29 +191,32 @@ int	draw(t_fdf *fdf)
 
 int	image_handeling(t_fdf *fdf)
 {
-	fdf->img = (t_img *)ft_calloc(sizeof(t_img), 1);//free?
+	fdf->img = (t_img *)ft_calloc(sizeof(t_img), 1);
 	if (!fdf->img)
 		return (0);
 	fdf->img->img_ptr = mlx_new_image(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y);
 	if (!fdf->img->img_ptr)
-		return(1);
+		return (1);
 	fdf->img->addr = (int *)mlx_get_data_addr(fdf->img->img_ptr,
 												&fdf->img->bits_per_pixel,
 												&fdf->img->line_length,
 												&fdf->img->endian);
+	fdf->i = -1;
+	fdf->j = -1;
 	return (1);
 }
 
 int	loop_hook(t_fdf *fdf)
 {
 	draw(fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0,
+			0);
 	return (1);
 }
 
-void clean(t_fdf *fdf)
+void	clean(t_fdf *fdf)
 {
-	if(!fdf)
+	if (!fdf)
 		exit(1);
 	if (fdf->mlx_ptr && fdf->img->img_ptr)
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img->img_ptr);
@@ -239,7 +241,6 @@ int	refresh_image(t_fdf *fdf)
 	loop_hook(fdf);
 	return (1);
 }
-
 
 void	register_hooks(t_fdf *fdf)
 {
@@ -267,7 +268,7 @@ int	main(int argc, char **argv)
 	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, WIN_SIZE_X, WIN_SIZE_Y, "FDF");
 	if (!fdf->win_ptr)
 		clean(fdf);
-	if (image_handeling(fdf)== 0)
+	if (image_handeling(fdf) == 0)
 		clean(fdf);
 	register_hooks(fdf);
 	mlx_loop(fdf->mlx_ptr);
