@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/25 17:03:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 12:22:13 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ typedef struct s_fdf
 	void	*win_ptr;
 	t_map	*input;
 	t_img	*img;
+	int i;
+	int j;
+	int k;
 }			t_fdf;
 
 int	ft_create_2d_int(t_fdf *fdf);

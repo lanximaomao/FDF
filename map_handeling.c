@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/30 10:30:06 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/30 12:23:58 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,20 @@
 
 int	ft_create_2d_int(t_fdf *fdf)
 {
-	int	i;
-	int	j;
-	int	k;
-
-	i = -1;
-	k = -1;
 	fdf->input->map_2d = ft_split(fdf->input->map_1d, '\n');
 	fdf->input->map_int = (int **)ft_calloc(sizeof(int *), fdf->input->size_y);
 	if (!fdf->input->map_int)
 		return(0);
-	while (++i < fdf->input->size_y)
+	while (++fdf->i < fdf->input->size_y)
 	{
-		fdf->input->map_int[i] = (int *)ft_calloc(sizeof(int), fdf->input->size_x);//
-		if (!fdf->input->map_int[i])
+		fdf->input->map_int[fdf->i] = (int *)ft_calloc(sizeof(int), fdf->input->size_x);
+		if (!fdf->input->map_int[fdf->i])
 			return(0);
-		fdf->input->point = ft_split(fdf->input->map_2d[i], ' ');
-		j = -1;
-		while (++j < fdf->input->size_x && ++k < fdf->input->size_x * fdf->input->size_y)
-			fdf->input->map_int[i][j] = ft_atoi(fdf->input->point[j]);
-		free_char(fdf->input->point);//
+		fdf->input->point = ft_split(fdf->input->map_2d[fdf->i], ' ');
+		fdf->j = -1;
+		while (++fdf->j < fdf->input->size_x && ++fdf->k < fdf->input->size_x * fdf->input->size_y)
+			fdf->input->map_int[fdf->i][fdf->j] = ft_atoi(fdf->input->point[fdf->j]);
+		free_char(fdf->input->point);
 	}
 	free(fdf->input->map_1d);
 	free_char(fdf->input->map_2d);
@@ -63,6 +57,9 @@ void	ft_map_init(t_fdf *fdf)
 	fdf->input->size_y = 0;
 	fdf->input->zoom = 1;
 	fdf->input->zoom_z = 1;
+	fdf->i = -1;
+	fdf->j = -1;
+	fdf->k = -1;
 }
 
 void	free_char(char **input)
