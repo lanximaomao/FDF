@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/30 12:56:30 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/31 14:58:59 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,17 +170,20 @@ int	draw(t_fdf *fdf)
 		fdf->j = -1;
 		while (++fdf->j < fdf->input->size_x)
 		{
-			pos1 = pos_init(fdf->j, fdf->i, fdf->input->map_int[fdf->i][fdf->j], pos1);
+			pos1 = pos_init(fdf->j, fdf->i, fdf->input->map_int[fdf->i][fdf->j],
+					pos1);
 			pos1 = conversion(pos1, fdf);
 			if (fdf->i != fdf->input->size_y - 1)
 			{
-				pos2 = pos_init(fdf->j, fdf->i + 1, fdf->input->map_int[fdf->i + 1][fdf->j], pos2);
+				pos2 = pos_init(fdf->j, fdf->i + 1, fdf->input->map_int[fdf->i
+						+ 1][fdf->j], pos2);
 				pos2 = conversion(pos2, fdf);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
 			if (fdf->j != fdf->input->size_x - 1)
 			{
-				pos2 = pos_init(fdf->j + 1, fdf->i,fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
+				pos2 = pos_init(fdf->j + 1, fdf->i,
+						fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
 				pos2 = conversion(pos2, fdf);
 				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
 			}
@@ -198,13 +201,13 @@ int	image_handeling(t_fdf *fdf)
 	if (!fdf->img->img_ptr)
 		return (1);
 	fdf->img->addr = (int *)mlx_get_data_addr(fdf->img->img_ptr,
-												&fdf->img->bits_per_pixel,
-												&fdf->img->line_length,
-												&fdf->img->endian);
+			&fdf->img->bits_per_pixel, &fdf->img->line_length,
+			&fdf->img->endian);
 	fdf->i = -1;
 	fdf->j = -1;
 	draw(fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0, 0);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img->img_ptr, 0,
+		0);
 	return (1);
 }
 
