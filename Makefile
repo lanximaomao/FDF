@@ -1,5 +1,5 @@
 NAME = fdf
-SRCS = window_handeling.c map_handeling.c hooks.c
+SRCS = line.c map_handeling.c image_handeling.c hooks.c clean.c main.c color.c isometric.c draw.c conversion.c
 OBJS = $(SRCS:.c=.o)
 #INCLUDE = libft/libft.h
 FLAGS = -Wall -Wextra -Werror

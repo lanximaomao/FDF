@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 14:59:32 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/31 15:23:53 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,6 @@ void	ft_map_init(t_fdf *fdf)
 	fdf->k = -1;
 }
 
-void	free_char(char **input)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (input[i])
-	{
-		free(input[i]);
-		i++;
-	}
-	free(input);
-}
-
 int	ft_read_map(char **argv, t_fdf *fdf)
 {
 	fdf->input->fd = open(argv[1], O_RDONLY);
@@ -113,31 +98,6 @@ int	ft_read_map(char **argv, t_fdf *fdf)
 	return (1);
 }
 
-void	zoom_init(t_fdf *fdf)
-{
-	int	len;
-	int	num;
-	int	min;
-
-	if (WIN_SIZE_X > WIN_SIZE_Y)
-		min = WIN_SIZE_Y;
-	else
-		min = WIN_SIZE_X;
-	num = 1;
-	len = 0.87 * (fdf->input->size_x + fdf->input->size_y);
-	if (num * len > min)
-	{
-		while (num * len > min)
-			num = num / 2;
-	}
-	else if (num * len < min)
-	{
-		while (num * len < min)
-			num++;
-	}
-	fdf->input->zoom = num;
-}
-
 int	map_handling(int argc, char **argv, t_fdf *fdf)
 {
 	if (argc != 2)
@@ -148,9 +108,5 @@ int	map_handling(int argc, char **argv, t_fdf *fdf)
 	if (ft_read_map(argv, fdf) == 0)
 		return (0);
 	zoom_init(fdf);
-	ft_printf("my map's x dimension is %d\n", fdf->input->size_x);
-	ft_printf("my map's y dimension is %d\n", fdf->input->size_y);
-	ft_printf("my map's zoom is %d\n", fdf->input->zoom);
-	ft_printf("my map's zoom_z is %d\n", fdf->input->zoom_z);
 	return (1);
 }
