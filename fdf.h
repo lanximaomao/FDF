@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:19:53 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/31 15:25:06 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,20 +101,20 @@ int			image_handeling(t_fdf *fdf);
 int			refresh_image(t_fdf *fdf);
 
 void		clean(t_fdf *fdf);
-void	free_int(int **input, int height);
+void		free_int(int **input, int height);
 void		free_char(char **input);
 
-int	which_color(t_pos pos1, t_pos pos2);
-t_pos	isometric(t_pos pos);
-int	draw(t_fdf *fdf);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color_code);
+int			which_color(t_pos pos1, t_pos pos2);
+t_pos		isometric(t_pos pos);
+int			draw(t_fdf *fdf);
+void		my_mlx_pixel_put(t_img *data, int x, int y, int color_code);
 
-int	ft_abs(int a);
-t_line	line_init(t_pos pos0, t_pos pos1);
-int	bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf, int color_code);
-t_pos	pos_init(int x, int y, int z, t_pos pos);
+int			ft_abs(int a);
+t_line		line_init(t_pos pos0, t_pos pos1);
+int			bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf, int color_code);
+t_pos		pos_init(int x, int y, int z, t_pos pos);
 
-t_pos	apply_zoom(t_pos pos, t_fdf *fdf);
-t_pos	conversion(t_pos pos, t_fdf *fdf);
+t_pos		apply_zoom(t_pos pos, t_fdf *fdf);
+t_pos		conversion(t_pos pos, t_fdf *fdf);
 
 #endif
