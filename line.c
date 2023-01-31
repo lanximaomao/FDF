@@ -6,14 +6,11 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:22:41 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/31 15:31:41 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft/ft_printf.h"
-#include "libft/get_next_line.h"
-#include "libft/libft.h"
 
 /*
 ** 1) 17 is the mouse event code means for close button;

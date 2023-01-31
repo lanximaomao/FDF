@@ -6,14 +6,11 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:23:53 by lsun             ###   ########.fr       */
+/*   Updated: 2023/01/31 15:31:52 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft/ft_printf.h"
-#include "libft/get_next_line.h"
-#include "libft/libft.h"
 
 int	ft_create_2d_int(t_fdf *fdf)
 {
