@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:31:52 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/01 10:08:21 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_create_2d_int(t_fdf *fdf)
 		fdf->j = -1;
 		while (++fdf->j < fdf->input->size_x && ++fdf->k < fdf->input->size_x
 			* fdf->input->size_y)
-			fdf->input->map_int[fdf->i][fdf->j] = ft_atoi(fdf->input->point[fdf->j]);
+			fdf->input->map_int[fdf->i][fdf->j]
+				= ft_atoi(fdf->input->point[fdf->j]);
 		free_char(fdf->input->point);
 	}
 	free(fdf->input->map_1d);
@@ -65,17 +66,12 @@ int	ft_read_map(char **argv, t_fdf *fdf)
 {
 	fdf->input->fd = open(argv[1], O_RDONLY);
 	if (fdf->input->fd == -1)
-	{
-		ft_printf("cann't open file");
 		return (0);
-	}
 	ft_map_init(fdf);
 	fdf->input->line = get_next_line(fdf->input->fd);
 	fdf->input->line_split = ft_split(fdf->input->line, ' ');
 	while (fdf->input->line_split[fdf->input->size_x])
-	{
 		fdf->input->size_x++;
-	}
 	free_char(fdf->input->line_split);
 	fdf->input->map_1d = ft_strdup(fdf->input->line);
 	free(fdf->input->line);
