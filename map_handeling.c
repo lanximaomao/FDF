@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/01 10:08:21 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/01 15:39:33 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ int	ft_read_map(char **argv, t_fdf *fdf)
 {
 	fdf->input->fd = open(argv[1], O_RDONLY);
 	if (fdf->input->fd == -1)
+	{
+		perror("read map");
 		return (0);
+	}
 	ft_map_init(fdf);
 	fdf->input->line = get_next_line(fdf->input->fd);
 	fdf->input->line_split = ft_split(fdf->input->line, ' ');
@@ -95,7 +98,7 @@ int	map_handling(int argc, char **argv, t_fdf *fdf)
 {
 	if (argc != 2)
 	{
-		ft_printf("incorrect map\n");
+		ft_printf("incorrect number of arguments!\n");
 		exit(1);
 	}
 	if (ft_read_map(argv, fdf) == 0)
