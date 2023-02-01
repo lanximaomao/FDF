@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:30:49 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/01 12:43:28 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int			ft_read_map(char **argv, t_fdf *fdf);
 int			which_color(t_pos pos1, t_pos pos2);
 int			mouse_hook(int button, int x, int y, t_fdf *fdf);
 int			map_handling(int argc, char **argv, t_fdf *fdf);
-int			bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf, int color_code);
+int			bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf);
 
 t_pos		isometric(t_pos pos);
 t_pos		apply_zoom(t_pos pos, t_fdf *fdf);

@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:56:52 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:31:41 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/01 12:47:47 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ t_line	line_init(t_pos pos0, t_pos pos1)
 	return (line);
 }
 
-int	bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf, int color_code)
+int	bresenham_line(t_pos pos0, t_pos pos1, t_fdf *fdf)
 {
 	t_line	line;
+	int		color_code;
 
 	line = line_init(pos0, pos1);
+	color_code = which_color(pos0, pos1);
 	while (1)
 	{
 		my_mlx_pixel_put(fdf->img, pos0.x, pos0.y, color_code);

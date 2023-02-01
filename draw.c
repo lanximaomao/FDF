@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:11:39 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:18:19 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/01 12:46:40 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,15 @@ int	draw(t_fdf *fdf)
 			pos1 = pos_init(fdf->j, fdf->i, fdf->input->map_int[fdf->i][fdf->j],
 					pos1);
 			pos1 = conversion(pos1, fdf);
+			pos2 = pos1;
 			if (fdf->i != fdf->input->size_y - 1)
-			{
-				pos2 = pos_init(fdf->j, fdf->i + 1, fdf->input->map_int[fdf->i
-						+ 1][fdf->j], pos2);
-				pos2 = conversion(pos2, fdf);
-				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
-			}
+				bresenham_line(pos1, conversion(pos_init(fdf->j, fdf->i + 1,
+							fdf->input->map_int[fdf->i + 1][fdf->j], pos2),
+						fdf), fdf);
 			if (fdf->j != fdf->input->size_x - 1)
-			{
-				pos2 = pos_init(fdf->j + 1, fdf->i,
-						fdf->input->map_int[fdf->i][fdf->j + 1], pos2);
-				pos2 = conversion(pos2, fdf);
-				bresenham_line(pos1, pos2, fdf, which_color(pos1, pos2));
-			}
+				bresenham_line(pos1, conversion(pos_init(fdf->j + 1, fdf->i,
+							fdf->input->map_int[fdf->i][fdf->j + 1], pos2),
+						fdf), fdf);
 		}
 	}
 	return (0);
