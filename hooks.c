@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 17:01:31 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:31:32 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/27 15:48:50 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	mouse_hook(int button, int x, int y, t_fdf *fdf)
 int	close_widow(t_fdf *fdf)
 {
 	fdf = NULL;
-	exit(1);
+	exit(0);//change from exit(1) to exit(0)
 	return (0);
 }
 
