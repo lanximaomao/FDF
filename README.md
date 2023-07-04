@@ -18,20 +18,20 @@ This project is about creating a simple wireframe model representation of a 3D l
 
 **2- Run program:**
 
-	The coordinates of the landscape are stored in a .fdf file passed as a parameter. For example:
+The coordinates of the landscape are stored in a .fdf file passed as a parameter. For example:
 
 	./fdf test_maps/42.fdf
 	./fdf test_maps/mars.fdf
 
 **2- Keyboard and mouse actions:**
 
-	+ Press "+" to zoom in;
-	+ Press "-" to zoom out;
-	+ Press ESC to close the window.
++ Press "+" to zoom in;
++ Press "-" to zoom out;
++ Press ESC to close the window.
 
-	+ Mouse wheel scroll up to zoom in;
-	+ Mouse wheel to scroll down to zoom out;
-	+ Click on the cross on the window's frame to close the window.
++ Mouse wheel scroll up to zoom in;
++ Mouse wheel to scroll down to zoom out;
++ Click on the cross on the window's frame to close the window.
 
 
 ## Images
