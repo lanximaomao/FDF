@@ -25,12 +25,11 @@ The coordinates of the landscape are stored in a .fdf file passed as a parameter
 
 **2- Keyboard and mouse actions:**
 
-+ Press "+" to zoom in;
-+ Press "-" to zoom out;
++ Press "+" to zoom in.
++ Press "-" to zoom out.
 + Press ESC to close the window.
-
-+ Mouse wheel scroll up to zoom in;
-+ Mouse wheel to scroll down to zoom out;
++ Mouse wheel scroll up to zoom in.
++ Mouse wheel to scroll down to zoom out.
 + Click on the cross on the window's frame to close the window.
 
 
