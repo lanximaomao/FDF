@@ -37,8 +37,9 @@ This project is about creating a simple wireframe model representation of a 3D l
 ## Images
 
 ![Visulization](images/42.png)
-![Visulization](images/mars.png)
+![Visulization](images/pyramide.png)
 ![Visulization](images/julia.png)
+![Visulization](images/t1.png)
 
 ## External resources
 
