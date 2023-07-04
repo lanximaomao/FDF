@@ -6,11 +6,11 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:09:04 by lsun              #+#    #+#             */
-/*   Updated: 2023/07/04 15:42:36 by lsun             ###   ########.fr       */
+/*   Updated: 2023/07/04 17:31:35 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 int	which_color(t_pos pos1, t_pos pos2)
 {

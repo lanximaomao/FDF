@@ -6,11 +6,11 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:13:42 by lsun              #+#    #+#             */
-/*   Updated: 2023/01/31 15:22:25 by lsun             ###   ########.fr       */
+/*   Updated: 2023/07/04 17:31:39 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 void	zoom_init(t_fdf *fdf)
 {

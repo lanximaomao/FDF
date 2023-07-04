@@ -6,16 +6,16 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:05:17 by lsun              #+#    #+#             */
-/*   Updated: 2023/07/04 15:09:06 by lsun             ###   ########.fr       */
+/*   Updated: 2023/07/04 17:39:59 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "libft/ft_printf.h"
-# include "libft/get_next_line.h"
-# include "libft/libft.h"
+# include "../libft/ft_printf.h"
+# include "../libft/get_next_line.h"
+# include "../libft/libft.h"
 # include "mlx.h"
 # include <fcntl.h>
 # include <stdio.h>

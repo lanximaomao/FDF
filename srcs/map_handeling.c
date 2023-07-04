@@ -6,11 +6,11 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 20:47:29 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/01 15:39:33 by lsun             ###   ########.fr       */
+/*   Updated: 2023/07/04 17:31:59 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../includes/fdf.h"
 
 int	ft_create_2d_int(t_fdf *fdf)
 {
