@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is about creating a simple wireframe model representation of a 3D land-scape by linking various points (x, y, z) thanks to line segments (edges). For this project, Bresenham's line algorithm is used. Also 42 school's own graphical library MiniLibX is used here to open a window, create images and deal with keyboard and mouse events.
+This project is about creating a simple wireframe model representation of a 3D land-scape by linking various points (x, y, z) thanks to line segments (edges). For this project, Bresenham's line algorithm is used. Also 42 school's own graphical library MiniLibX is used here to open a window, create images and deal with keyboard and mouse events. Detailed project requirements can be found [here](FDF.pdf).
 
 <br>
 
